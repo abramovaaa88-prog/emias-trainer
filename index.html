@@ -1424,4 +1424,123 @@ document.addEventListener("click",function(e){
 })();
 </script>
 
+
+<style>
+/* Personal data: alignment correction */
+#personal .pdEditor{
+  margin:4px 26px 8px 165px!important;
+  padding:10px 12px!important;
+}
+#personal .pdEditor .editGrid{
+  display:grid!important;
+  grid-template-columns:140px minmax(135px,1fr) 90px minmax(150px,1fr)!important;
+  gap:8px 12px!important;
+  align-items:center!important;
+}
+#personal .pdEditor input,
+#personal .pdEditor select{
+  width:100%!important;
+  min-width:0!important;
+  height:28px!important;
+  box-sizing:border-box!important;
+}
+#personal .pdEditor label{white-space:nowrap!important}
+#personal .pdEditor [id*="number" i],
+#personal .pdEditor [name*="number" i]{min-width:150px!important}
+
+/* The save disk is intentionally unobtrusive but clearly green. */
+#personal .saveDisk,
+#personal button[title*="сохран" i],
+#personal button[aria-label*="сохран" i]{
+  width:29px!important;
+  height:27px!important;
+  padding:2px!important;
+  border:1px solid #a8bd9c!important;
+  background:#dcebd5!important;
+  color:#477d3d!important;
+  font-size:15px!important;
+  box-shadow:none!important;
+  border-radius:1px!important;
+  opacity:.82!important;
+}
+#personal .saveDisk:hover,
+#personal button[title*="сохран" i]:hover,
+#personal button[aria-label*="сохран" i]:hover{
+  opacity:1!important;
+  background:#cfe5c6!important;
+}
+</style>
+<script>
+(function(){
+  const drafts = new WeakMap();
+
+  function inputs(box){
+    return [...box.querySelectorAll('input,select,textarea')];
+  }
+  function snapshot(box){
+    const data = inputs(box).map(el => ({
+      el, value:el.value, checked:('checked' in el)?el.checked:null
+    }));
+    drafts.set(box,data);
+  }
+  function restore(box){
+    const data=drafts.get(box);
+    if(!data)return;
+    data.forEach(x=>{
+      x.el.value=x.value;
+      if(x.checked!==null)x.el.checked=x.checked;
+      x.el.dispatchEvent(new Event('input',{bubbles:true}));
+      x.el.dispatchEvent(new Event('change',{bubbles:true}));
+    });
+  }
+  function isSave(btn){
+    const s=((btn.title||'')+' '+(btn.getAttribute('aria-label')||'')+' '+(btn.textContent||'')).toLowerCase();
+    return s.includes('сохран') || btn.classList.contains('saveDisk') || s.includes('💾');
+  }
+  function editorOf(el){
+    return el.closest('.pdEditor') || el.closest('[data-editor]') || el.closest('.passportEditor');
+  }
+
+  document.addEventListener('click',e=>{
+    const btn=e.target.closest('button');
+    if(!btn)return;
+
+    /* Opening an editor starts a temporary draft. */
+    const t=((btn.title||'')+' '+(btn.textContent||'')).toLowerCase();
+    if(t.includes('a') || t.includes('карандаш') || t.includes('✎') || t.includes('✏')){
+      setTimeout(()=>{
+        const ed=[...document.querySelectorAll('#personal .pdEditor')].find(x=>getComputedStyle(x).display!=='none');
+        if(ed && !drafts.has(ed)) snapshot(ed);
+      },0);
+    }
+
+    /* Explicit disk click commits current values. */
+    if(isSave(btn)){
+      const ed=editorOf(btn) || [...document.querySelectorAll('#personal .pdEditor')].find(x=>getComputedStyle(x).display!=='none');
+      if(ed){
+        snapshot(ed);
+        btn.dataset.saved='1';
+        btn.style.opacity='.65';
+        setTimeout(()=>btn.style.opacity='.82',180);
+      }
+    }
+  },true);
+
+  /* If user leaves/closes an editor without disk save, revert draft. */
+  const observer=new MutationObserver(records=>{
+    records.forEach(r=>{
+      if(!(r.target instanceof HTMLElement))return;
+      const ed=r.target.classList.contains('pdEditor')?r.target:r.target.closest?.('.pdEditor');
+      if(ed && drafts.has(ed) && getComputedStyle(ed).display==='none'){
+        restore(ed);
+        drafts.delete(ed);
+      }
+    });
+  });
+  document.querySelectorAll('#personal .pdEditor').forEach(ed=>{
+    observer.observe(ed,{attributes:true,attributeFilter:['style','class','hidden']});
+  });
+})();
+</script>
+
 </body></html>
