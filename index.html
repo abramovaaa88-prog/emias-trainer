@@ -577,4 +577,126 @@ function finishExam(){let a=getExamActual(),e=currentExam.exp,rows=[],errors=0;l
 function closeExamResult(){examResultOverlay.classList.remove('show')}
 const baseRegisterPatient=registerPatient;registerPatient=function(){if(examActive&&currentExam){if(regBtn.disabled)return;registered=true;finishExam();return}baseRegisterPatient()}
 
+
+/* === ERZL / REGISTRATION / PERSONAL DATA PATCH === */
+const TRAINING_ERZL = {
+  // Not every incoming patient is present in the training ERZL.
+  "Петров Алексей Игоревич": {
+    verified:true,
+    snils:"563-345-120 60",
+    policy:"7756987654321098",
+    passport:"45 18 734621",
+    passportIssued:"ГУ МВД России по г. Москве",
+    phone:"+7 (916) 482-37-15",
+    registration:"г. Москва, ул. Академика Королёва, д. 18, кв. 42"
+  },
+  "Соколова Елена Андреевна": {
+    verified:true,
+    snils:"145-678-902 31",
+    policy:"7756987654321098",
+    passport:"45 20 518347",
+    passportIssued:"ГУ МВД России по г. Москве",
+    phone:"+7 (925) 314-68-27",
+    registration:"г. Москва, ул. Новаторов, д. 12, кв. 57"
+  },
+  "Орлова Ирина Павловна": {
+    verified:true,
+    snils:"182-436-795 04",
+    policy:"7756123409876543",
+    passport:"45 17 682914",
+    passportIssued:"ГУ МВД России по г. Москве",
+    phone:"+7 (903) 625-41-80",
+    registration:"г. Москва, Ленинградский проспект, д. 54, кв. 19"
+  },
+  "Морозов Дмитрий Олегович": {
+    verified:true,
+    snils:"197-524-683 12",
+    policy:"7756432187654098",
+    passport:"45 19 347825",
+    passportIssued:"ГУ МВД России по г. Москве",
+    phone:"+7 (977) 208-53-64",
+    registration:"г. Москва, ул. Профсоюзная, д. 71, кв. 103"
+  },
+  "Николаев Павел Романович": {
+    verified:true,
+    snils:"164-820-537 46",
+    policy:"7756098712345678",
+    passport:"45 16 903271",
+    passportIssued:"ГУ МВД России по г. Москве",
+    phone:"+7 (905) 741-29-36",
+    registration:"г. Москва, ул. Люблинская, д. 33, кв. 81"
+  },
+  "Семёнова Татьяна Петровна": {
+    verified:true,
+    snils:"153-907-426 85",
+    policy:"7756876543210987",
+    passport:"45 21 274638",
+    passportIssued:"ГУ МВД России по г. Москве",
+    phone:"+7 (926) 853-17-42",
+    registration:"г. Москва, ул. Сходненская, д. 24, кв. 16"
+  }
+};
+
+function currentPatientFio(){
+  return [surname?.value,name?.value,patronymic?.value].filter(Boolean).join(" ").replace(/\s+/g," ").trim();
+}
+function currentErzlRecord(){ return TRAINING_ERZL[currentPatientFio()] || null; }
+
+function forceRegistrationState(){
+  const b=document.getElementById("regBtn");
+  if(!b)return;
+  const r=currentErzlRecord();
+  // Registration becomes available after an ERZL search result:
+  // verified OR explicitly not verified.
+  const status=document.getElementById("erzStatus") || document.querySelector(".erzStatus,.erzlStatus");
+  const statusText=(status?.textContent||"").toLowerCase();
+  const searched = !!r || statusText.includes("не сверен") || statusText.includes("сверен");
+  b.disabled=!searched;
+  if(searched){ b.removeAttribute("disabled"); b.style.pointerEvents="auto"; }
+}
+
+function fillPersonalFromErzl(){
+  const r=currentErzlRecord();
+  if(!r || !r.verified)return;
+
+  const map = {
+    passport:["passport","passportNumber","personalPassport"],
+    passportIssued:["passportIssued","issuedBy","personalIssuedBy"],
+    phone:["phone","telephone","personalPhone"],
+    registration:["registration","regAddress","personalRegistration","address"]
+  };
+  Object.entries(map).forEach(([key,ids])=>{
+    for(const id of ids){
+      const el=document.getElementById(id);
+      if(el){el.value=r[key];break;}
+    }
+  });
+}
+
+// Capture SEARCH button after existing handler and normalize training result.
+document.addEventListener("click",function(e){
+  const t=e.target.closest("button");
+  if(!t)return;
+  const tx=(t.textContent||"").trim().toUpperCase();
+  if(tx.includes("ПОИСК")){
+    setTimeout(()=>{
+      const r=currentErzlRecord();
+      if(r && r.verified){
+        if(typeof snils!=="undefined" && snils) snils.value=r.snils;
+        if(typeof policy!=="undefined" && policy) policy.value=r.policy;
+      }
+      forceRegistrationState();
+    },0);
+  }
+},true);
+
+// When Personal data tab is opened, populate it only for ERZL-verified patients.
+document.addEventListener("click",function(e){
+  const t=e.target.closest(".tabs button,button");
+  if(!t)return;
+  if((t.textContent||"").trim().includes("Персональные данные")){
+    setTimeout(fillPersonalFromErzl,0);
+  }
+},true);
+
 </script></body></html>
