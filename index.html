@@ -162,7 +162,12 @@ function setActiveMenu(which){menuIncoming.classList.toggle('active',which==='in
 function setTopTitle(section){document.querySelector('.appTop').textContent='☰ КИС ЕМИАС [Приемное отделение] - ['+section+']'}
 function showIncoming(){card.classList.add('hidden');walkinPanel.classList.add('hidden');incomingPanel.classList.remove('hidden');setActiveMenu('incoming');setTopTitle('Поступающие')}
 function showWalkins(){card.classList.add('hidden');incomingPanel.classList.add('hidden');walkinPanel.classList.remove('hidden');setActiveMenu('walkin');setTopTitle('Обратившиеся')}
-function fillFio(fio){let p=(fio||'').trim().split(/\s+/);surname.value=p[0]||'';name.value=p[1]||'';patronymic.value=p.slice(2).join(' ')}
+function fillFio(fio){
+  const parts=(fio||'').trim().split(/\s+/);
+  document.getElementById('surname').value=parts[0]||'';
+  document.getElementById('name').value=parts[1]||'';
+  document.getElementById('patronymic').value=parts.slice(2).join(' ')||'';
+}
 function applyChannelFields(v){let self=v==='самотёк';deliveredBy.value=self?'самостоятельно':'скорой помощью';smpStation.value=self?'':'66';referredBy.value=self?'Самообращение':'Скорая помощь';refInstitution.value=self?'':'СС и НМП им. А.С. Пучкова / СС и НМП им. А.С. Пучкова'}
 function newWalkin(){selected={ckg:'',fio:'',channel:'самотёк',walkin:true};walkinPanel.classList.add('hidden');incomingPanel.classList.add('hidden');card.classList.remove('hidden');setActiveMenu('walkin');setTopTitle('Обратившиеся');resetCard();channel.value='самотёк';ckg.value='';applyChannelFields('самотёк');extra.value='';document.querySelectorAll('.tabs button')[0].click();surname.focus()}
 function returnFromCard(){if(selected&&selected.walkin)showWalkins();else showIncoming()}
