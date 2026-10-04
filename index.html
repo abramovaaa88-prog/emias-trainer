@@ -190,6 +190,26 @@
 .postRegFolder{display:flex;gap:4px}.postRegFolder input{flex:1}.postRegFolder button{width:38px;border:1px solid #9cabb0;background:#f5f1d4}
 .postRegSave{float:right;width:150px;height:36px;margin-top:4px;background:#72bd18;border:1px solid #65a913;color:#fff;font-size:15px;cursor:pointer}
 </style></head><body>
+
+<div id="modeScreen" style="display:none;position:fixed;inset:0;background:#f7f7f7;z-index:99999;align-items:center;justify-content:center;font-family:Arial,sans-serif">
+  <div style="width:520px;background:white;border:1px solid #aeb9bd;box-shadow:0 4px 18px rgba(0,0,0,.16)">
+    <div style="background:#397d80;color:white;padding:14px 18px;font-size:20px;font-weight:bold">КИС ЕМИАС — учебный модуль</div>
+    <div style="padding:30px">
+      <div style="font-size:20px;margin-bottom:8px;text-align:center">Выберите режим работы</div>
+      <div style="font-size:13px;color:#667;text-align:center;margin-bottom:26px">Режим можно выбрать после входа в систему</div>
+      <div style="display:flex;gap:18px">
+        <button id="trainerModeBtn" type="button" style="flex:1;padding:22px 12px;border:1px solid #9aaeb5;background:#f8fbfc;cursor:pointer;font-size:18px">
+          <b>Тренажёр</b><br><span style="font-size:12px;color:#667">Свободная отработка регистрации</span>
+        </button>
+        <button id="examModeBtn" type="button" style="flex:1;padding:22px 12px;border:1px solid #9aaeb5;background:#f8fbfc;cursor:pointer;font-size:18px">
+          <b>Экзамен</b><br><span style="font-size:12px;color:#667">Контрольное выполнение задания</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="modeBadge" style="display:none;position:fixed;right:18px;top:8px;z-index:9000;background:rgba(255,255,255,.92);border:1px solid #b9c7cb;padding:5px 10px;font:12px Arial;color:#315d66"></div>
+
 <section id="loginScreen"><div class="loginWin"><div class="loginHead">☰ &nbsp; КИС ЕМИАС <span style="float:right">— &nbsp; ×</span></div><div class="loginBody"><div class="loginBrand"><div class="keys">⚿</div><div class="ver">Версия:<br>2.1.110.32030</div></div><div class="loginForm"><div class="lr"><label>Логин:</label><input id="login"></div><div class="lr"><label>Пароль:</label><input id="password" type="password"></div><select id="lang" class="lang"><option>RUS</option></select><div class="loginBtns"><button id="loginOkBtn" type="button" onclick="doLogin()">OK</button><button type="button" onclick="clearLogin()">Отмена</button></div></div></div></div></section>
 <section id="app" class="hidden"><div class="appTop">☰ КИС ЕМИАС [Приемное отделение] - [Поступающие]</div><div class="layout"><aside class="sidebar"><div class="logo">ЕМИАС</div><div id="menuWalkin" class="menuItem clickable" onclick="showWalkins()">Обратившиеся</div><div id="menuIncoming" class="menuItem active clickable" onclick="showIncoming()">Поступающие</div><div class="menuItem inactive">Назначения</div><div class="menuItem inactive">Лист ожидания госпитализации</div><div class="menuItem inactive">Выполненные планы</div><div class="menuItem inactive">Направления в стационар</div><div class="menuItem inactive">Все госпитализированные</div><div class="menuItem inactive">Выписанные</div><div class="menuItem inactive">Отказы</div><div class="menuItem inactive">Все пациенты</div><div class="menuItem inactive">Отчёты</div><div id="menuExam" class="menuItem clickable examMenu" onclick="startExam()">Экзамен</div><div class="walkinLeftZones"><div class="walkinLeftZonesTitle">Лечебные зоны ПДО</div><div class="walkinZones"><div><div>Жёлтая</div><div class="walkinZone">1/0</div></div><div><div>Зелёная</div><div class="walkinZone">1/0</div></div></div></div></aside><main class="workspace"><div id="examBar" class="examBar"><div><b id="examTitle"></b><div class="examTaskHint" id="examHint"></div></div><button class="examBtn" onclick="showExamDocuments()">Документы задания</button></div>
 <div id="walkinPanel" class="walkinPanel hidden">
@@ -818,6 +838,125 @@ document.addEventListener("click",function(e){
     });
     window.updateRegister();
   });
+})();
+
+</script>
+<script>
+
+/* === TRAINER / EXAM MODE === */
+(function(){
+  let selectedMode = null;
+
+  function appEl(){ return document.getElementById('app'); }
+  function loginEl(){ return document.getElementById('loginScreen'); }
+  function modeEl(){ return document.getElementById('modeScreen'); }
+
+  function showModeChoice(){
+    const m=modeEl(), a=appEl(), l=loginEl();
+    if(l) l.style.display='none';
+    if(a) a.style.display='none';
+    if(m) m.style.display='flex';
+  }
+
+  function startMode(mode){
+    selectedMode=mode;
+    window.trainingMode=mode;
+    const m=modeEl(), a=appEl(), badge=document.getElementById('modeBadge');
+    if(m) m.style.display='none';
+    if(a) a.style.display='block';
+    if(badge){
+      badge.textContent = mode==='exam' ? 'Режим: ЭКЗАМЕН' : 'Режим: ТРЕНАЖЁР';
+      badge.style.display='block';
+    }
+    document.body.dataset.mode=mode;
+  }
+
+  document.addEventListener('DOMContentLoaded',function(){
+    const t=document.getElementById('trainerModeBtn');
+    const e=document.getElementById('examModeBtn');
+    if(t) t.onclick=()=>startMode('trainer');
+    if(e) e.onclick=()=>startMode('exam');
+
+    // Перехватываем успешный вход: существующая логика сначала показывает app,
+    // затем сразу переводим пользователя на выбор режима.
+    const ok=document.getElementById('loginOk');
+    if(ok){
+      ok.addEventListener('click',function(){
+        setTimeout(function(){
+          const l=loginEl();
+          if(l && getComputedStyle(l).display==='none') showModeChoice();
+        },0);
+      });
+    }
+    const p=document.getElementById('password');
+    if(p){
+      p.addEventListener('keydown',function(ev){
+        if(ev.key==='Enter'){
+          setTimeout(function(){
+            const l=loginEl();
+            if(l && getComputedStyle(l).display==='none') showModeChoice();
+          },0);
+        }
+      });
+    }
+  });
+
+  window.getTrainingMode=()=>selectedMode;
+})();
+
+</script>
+<script>
+
+/* === FINAL REGISTRATION ACTIVATION FIX === */
+(function(){
+  function getErzlResult(){
+    const els=[
+      document.getElementById('erzRightStatus'),
+      document.getElementById('erzStatus')
+    ].filter(Boolean);
+    return els.map(x=>(x.textContent||'').trim()).join(' ');
+  }
+
+  function syncRegistrationButton(){
+    const btn=document.getElementById('regBtn');
+    if(!btn)return;
+
+    const txt=getErzlResult();
+    const checked =
+      txt.includes('Сверен с ЕРЗЛ') ||
+      txt.includes('Не сверен с ЕРЗЛ') ||
+      txt.includes('Пациент в ЕРЗЛ не найден') ||
+      txt.includes('Обнаружено расхождение');
+
+    btn.disabled=!checked;
+    btn.classList.toggle('enabled',checked);
+    btn.style.pointerEvents=checked?'auto':'none';
+    btn.style.cursor=checked?'pointer':'default';
+    btn.style.opacity=checked?'1':'.72';
+  }
+
+  // Run after all existing click handlers, so no older function can leave it disabled.
+  document.addEventListener('click',function(e){
+    const b=e.target.closest('button');
+    if(!b)return;
+    const label=(b.textContent||'').trim().toUpperCase();
+    if(label.includes('ПОИСК')){
+      setTimeout(syncRegistrationButton,0);
+      setTimeout(syncRegistrationButton,25);
+      setTimeout(syncRegistrationButton,100);
+    }
+  },false);
+
+  document.addEventListener('DOMContentLoaded',function(){
+    ['erzRightStatus','erzStatus'].forEach(id=>{
+      const el=document.getElementById(id);
+      if(el)new MutationObserver(syncRegistrationButton)
+        .observe(el,{childList:true,subtree:true,characterData:true});
+    });
+    syncRegistrationButton();
+  });
+
+  window.syncRegistrationButton=syncRegistrationButton;
 })();
 
 </script>
