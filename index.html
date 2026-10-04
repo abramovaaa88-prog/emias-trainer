@@ -699,4 +699,61 @@ document.addEventListener("click",function(e){
   }
 },true);
 
+
+/* === LOGIN OK BUTTON FIX === */
+(function(){
+  function fixLogin(){
+    const login =
+      document.getElementById('login') ||
+      document.querySelector('input[name="login"]') ||
+      document.querySelector('#loginScreen input[type="text"]');
+
+    const pass =
+      document.getElementById('password') ||
+      document.querySelector('input[name="password"]') ||
+      document.querySelector('#loginScreen input[type="password"]');
+
+    const scope = document.getElementById('loginScreen') || document;
+    const buttons = [...scope.querySelectorAll('button,input[type="button"],input[type="submit"]')];
+    const ok = buttons.find(b => ((b.textContent || b.value || '').trim().toUpperCase() === 'OK'));
+
+    if(!login || !pass || !ok) return;
+
+    function updateOk(){
+      const ready = login.value.trim().length > 0 && pass.value.length > 0;
+      ok.disabled = !ready;
+      if(ready){
+        ok.removeAttribute('disabled');
+        ok.style.pointerEvents = 'auto';
+        ok.style.opacity = '1';
+        ok.style.cursor = 'pointer';
+      } else {
+        ok.disabled = true;
+        ok.style.opacity = '.55';
+      }
+    }
+
+    login.addEventListener('input', updateOk);
+    login.addEventListener('change', updateOk);
+    pass.addEventListener('input', updateOk);
+    pass.addEventListener('change', updateOk);
+
+    // Enter in password behaves like OK.
+    pass.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' && login.value.trim() && pass.value){
+        e.preventDefault();
+        ok.click();
+      }
+    });
+
+    updateOk();
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', fixLogin);
+  } else {
+    fixLogin();
+  }
+})();
+
 </script></body></html>
