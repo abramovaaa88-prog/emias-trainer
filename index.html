@@ -232,43 +232,60 @@ function selectRow(tr,ckgVal,fioVal,channelVal,dobVal,sexVal){
   };
 }
 function openSelected(){
-  if(!selected){alert('Сначала выберите пациента в списке поступающих');return;}
+  const tr=document.querySelector('.incoming tbody tr.sel');
+  if(!tr){alert('Сначала выберите пациента в списке поступающих');return;}
 
+  const cells=tr.querySelectorAll('td');
   const patient={
-    ckg:selected.ckg||'',
-    fio:selected.fio||'',
-    channel:selected.channel||'103',
-    dob:selected.dob||'',
-    sex:selected.sex||''
+    sex:tr.dataset.sex||'',
+    channel:(cells[1]?.textContent||'').trim(),
+    ckg:(cells[2]?.textContent||'').trim(),
+    fio:(cells[4]?.textContent||'').trim(),
+    dob:(tr.dataset.dob||'').trim()
   };
 
+  // Keep selected synchronized for the rest of the trainer logic.
+  selected={...patient};
+
+  // Open and reset the card first.
   document.getElementById('walkinPanel').classList.add('hidden');
   document.getElementById('incomingPanel').classList.add('hidden');
   document.getElementById('card').classList.remove('hidden');
-
   resetCard();
   setActiveMenu('incoming');
 
-  const c=document.getElementById('ckg');
-  const ch=document.getElementById('channel');
-  if(c)c.value=patient.ckg;
-  if(ch)ch.value=patient.channel;
-  applyChannelFields(patient.channel);
+  // Then fill the card from the actual selected row.
+  const parts=patient.fio.split(/\s+/);
+  const surnameEl=document.getElementById('surname');
+  const nameEl=document.getElementById('name');
+  const patronymicEl=document.getElementById('patronymic');
+  const dobEl=document.getElementById('dob');
 
-  const parts=patient.fio.trim().split(/\s+/);
-  document.getElementById('surname').value=parts[0]||'';
-  document.getElementById('name').value=parts[1]||'';
-  document.getElementById('patronymic').value=parts.slice(2).join(' ')||'';
-  document.getElementById('dob').value=patient.dob;
+  if(surnameEl)surnameEl.value=parts[0]||'';
+  if(nameEl)nameEl.value=parts[1]||'';
+  if(patronymicEl)patronymicEl.value=parts.slice(2).join(' ')||'';
+  if(dobEl)dobEl.value=patient.dob;
+
+  const ckgEl=document.getElementById('ckg');
+  const channelEl=document.getElementById('channel');
+  if(ckgEl)ckgEl.value=patient.ckg;
+  if(channelEl)channelEl.value=patient.channel;
+  applyChannelFields(patient.channel);
 
   const sexEl=document.getElementById('sex');
   if(sexEl)sexEl.value=patient.sex;
-  document.querySelectorAll('input[name="sexRadio"]').forEach(r=>r.checked=(r.value===patient.sex));
+  document.querySelectorAll('input[name="sexRadio"]').forEach(r=>{
+    r.checked=(r.value===patient.sex);
+  });
 
-  const e=document.getElementById('extra');
-  if(e)e.value='';
+  const extraEl=document.getElementById('extra');
+  if(extraEl)extraEl.value='';
 
-  document.querySelectorAll('.tabs button')[0].click();
+  // Force the first tab without another reset.
+  document.querySelectorAll('.pane').forEach(x=>x.classList.remove('on'));
+  document.getElementById('main').classList.add('on');
+  document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('on'));
+  document.querySelectorAll('.tabs button')[0].classList.add('on');
 }
 function setActiveMenu(which){menuIncoming.classList.toggle('active',which==='incoming');menuWalkin.classList.toggle('active',which==='walkin')}
 function setTopTitle(section){document.querySelector('.appTop').textContent='☰ КИС ЕМИАС [Приемное отделение] - ['+section+']'}
