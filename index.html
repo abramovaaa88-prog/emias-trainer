@@ -133,10 +133,10 @@
 }
 
 /* FIX: registration action is always visible above the training notice */
-#main .registerBottom{position:fixed!important;right:28px!important;bottom:54px!important;z-index:120!important;width:155px!important;height:36px!important}
+#main .registerBottom{position:fixed!important;right:34px!important;bottom:92px!important;z-index:999!important;width:165px!important;height:38px!important;box-shadow:0 2px 7px rgba(0,0,0,.22)}
 .noticeTrain{right:12px!important;bottom:10px!important;z-index:50!important}
 #main{padding-bottom:105px!important}
-</style></head><body>
+#regBtn.enabled{background:#76b82a!important;color:#fff!important;cursor:pointer!important;opacity:1!important}#regBtn:disabled{opacity:.72!important}</style></head><body>
 <section id="loginScreen"><div class="loginWin"><div class="loginHead">☰ &nbsp; КИС ЕМИАС <span style="float:right">— &nbsp; ×</span></div><div class="loginBody"><div class="loginBrand"><div class="keys">⚿</div><div class="ver">Версия:<br>2.1.110.32030</div></div><div class="loginForm"><div class="lr"><label>Логин:</label><input id="login"></div><div class="lr"><label>Пароль:</label><input id="password" type="password"></div><select id="lang" class="lang"><option>RUS</option></select><div class="loginBtns"><button onclick="doLogin()">OK</button><button onclick="clearLogin()">Отмена</button></div></div></div></div></section>
 <section id="app" class="hidden"><div class="appTop">☰ КИС ЕМИАС [Приемное отделение] - [Поступающие]</div><div class="layout"><aside class="sidebar"><div class="logo">ЕМИАС</div><div id="menuWalkin" class="menuItem clickable" onclick="showWalkins()">Обратившиеся</div><div id="menuIncoming" class="menuItem active clickable" onclick="showIncoming()">Поступающие</div><div class="menuItem inactive">Назначения</div><div class="menuItem inactive">Лист ожидания госпитализации</div><div class="menuItem inactive">Выполненные планы</div><div class="menuItem inactive">Направления в стационар</div><div class="menuItem inactive">Все госпитализированные</div><div class="menuItem inactive">Выписанные</div><div class="menuItem inactive">Отказы</div><div class="menuItem inactive">Все пациенты</div><div class="menuItem inactive">Отчёты</div><div id="menuExam" class="menuItem clickable examMenu" onclick="startExam()">Экзамен</div></aside><main class="workspace"><div id="examBar" class="examBar"><div><b id="examTitle"></b><div class="examTaskHint" id="examHint"></div></div><button class="examBtn" onclick="showExamDocuments()">Документы задания</button></div>
 <div id="walkinPanel" class="walkinPanel hidden">
@@ -254,7 +254,7 @@ function openSelected(){
   resetCard();
   selected={...patient};
   setActiveMenu('incoming'); setTopTitle('Поступающие');
-  const p=patient.fio.split(/\\s+/);
+  const p=patient.fio.trim().split(/\s+/);
   document.getElementById('surname').value=p[0]||'';
   document.getElementById('name').value=p[1]||'';
   document.getElementById('patronymic').value=p.slice(2).join(' ')||'';
@@ -312,7 +312,7 @@ function searchERZL(){
   }
   updateRegister();
 }
-function updateRegister(){const b=document.getElementById('regBtn');const st=document.getElementById('erzRightStatus');const ok=!!(st&&st.textContent.trim());b.disabled=!ok;b.classList.toggle('enabled',ok)}
+function updateRegister(){const b=document.getElementById('regBtn');const st=document.getElementById('erzRightStatus');if(!b)return;const searched=!!(st&&st.textContent.trim()&&st.textContent.indexOf('Дата рождения:')!==0);b.disabled=!searched;b.classList.toggle('enabled',searched)}
 function registerPatient(){if(regBtn.disabled)return;registered=true;if(selected&&selected.walkin){walkinEmpty.innerHTML='<div style="text-align:center"><b>Пациент зарегистрирован как самотёк</b><br>'+[surname.value,name.value,patronymic.value].join(' ').replace(/\s+/g,' ').trim()+'</div>'}alert('Пациент зарегистрирован. Доступны вкладки карты пациента.');document.querySelectorAll('.tabs button')[1].click()}
 function openPDO(){pdoModal.classList.add('show');pdoQ.value='';renderPDO();pdoQ.focus()}
 function renderPDO(){let q=pdoQ.value.toLowerCase();pdoList.innerHTML=specs.filter(s=>s.toLowerCase().includes(q)).map(s=>`<div class="pdoItem" onclick="choosePDO(this)">${s}</div>`).join('')}
