@@ -136,7 +136,12 @@
 #main .registerBottom{position:fixed!important;right:34px!important;bottom:92px!important;z-index:999!important;width:165px!important;height:38px!important;box-shadow:0 2px 7px rgba(0,0,0,.22)}
 .noticeTrain{right:12px!important;bottom:10px!important;z-index:50!important}
 #main{padding-bottom:105px!important}
-#regBtn.enabled{background:#76b82a!important;color:#fff!important;cursor:pointer!important;opacity:1!important}#regBtn:disabled{opacity:.72!important}</style></head><body>
+#regBtn.enabled{background:#76b82a!important;color:#fff!important;cursor:pointer!important;opacity:1!important}#regBtn:disabled{opacity:.72!important}
+/* FINAL FIX */
+#card .registerBottom{position:fixed!important;right:42px!important;bottom:64px!important;z-index:10050!important;width:155px!important;height:36px!important}
+#card .registerBottom.enabled{background:#76b82a!important;cursor:pointer!important}
+.trainingMark{z-index:10000!important}
+</style></head><body>
 <section id="loginScreen"><div class="loginWin"><div class="loginHead">☰ &nbsp; КИС ЕМИАС <span style="float:right">— &nbsp; ×</span></div><div class="loginBody"><div class="loginBrand"><div class="keys">⚿</div><div class="ver">Версия:<br>2.1.110.32030</div></div><div class="loginForm"><div class="lr"><label>Логин:</label><input id="login"></div><div class="lr"><label>Пароль:</label><input id="password" type="password"></div><select id="lang" class="lang"><option>RUS</option></select><div class="loginBtns"><button onclick="doLogin()">OK</button><button onclick="clearLogin()">Отмена</button></div></div></div></div></section>
 <section id="app" class="hidden"><div class="appTop">☰ КИС ЕМИАС [Приемное отделение] - [Поступающие]</div><div class="layout"><aside class="sidebar"><div class="logo">ЕМИАС</div><div id="menuWalkin" class="menuItem clickable" onclick="showWalkins()">Обратившиеся</div><div id="menuIncoming" class="menuItem active clickable" onclick="showIncoming()">Поступающие</div><div class="menuItem inactive">Назначения</div><div class="menuItem inactive">Лист ожидания госпитализации</div><div class="menuItem inactive">Выполненные планы</div><div class="menuItem inactive">Направления в стационар</div><div class="menuItem inactive">Все госпитализированные</div><div class="menuItem inactive">Выписанные</div><div class="menuItem inactive">Отказы</div><div class="menuItem inactive">Все пациенты</div><div class="menuItem inactive">Отчёты</div><div id="menuExam" class="menuItem clickable examMenu" onclick="startExam()">Экзамен</div></aside><main class="workspace"><div id="examBar" class="examBar"><div><b id="examTitle"></b><div class="examTaskHint" id="examHint"></div></div><button class="examBtn" onclick="showExamDocuments()">Документы задания</button></div>
 <div id="walkinPanel" class="walkinPanel hidden">
@@ -228,49 +233,44 @@ function clearLogin(){login.value='';password.value=''}
 function selectRow(tr,ckgVal,fioVal,channelVal,dobVal,sexVal){
   document.querySelectorAll('.incoming tbody tr').forEach(x=>x.classList.remove('sel'));
   tr.classList.add('sel');
-  selected={
-    ckg:ckgVal||'',
-    fio:fioVal||'',
-    channel:channelVal||'',
-    dob:dobVal||tr.dataset.dob||'',
-    sex:sexVal||tr.dataset.sex||''
-  };
+  selected={ckg:ckgVal||'',fio:fioVal||'',channel:channelVal||'',dob:dobVal||tr.dataset.dob||'',sex:sexVal||tr.dataset.sex||''};
+  sessionStorage.setItem('emiasSelectedIncoming',JSON.stringify(selected));
 }
 function openSelected(){
-  const tr=document.querySelector('.incoming tbody tr.sel');
-  if(!tr){alert('Сначала выберите пациента в списке поступающих');return;}
-  const td=tr.querySelectorAll('td');
-  const patient={
-    sex:(tr.dataset.sex||'').trim(),
-    channel:(td[1]?.textContent||'').trim(),
-    ckg:(td[2]?.textContent||'').trim(),
-    fio:(td[4]?.textContent||'').trim(),
-    dob:(tr.dataset.dob||'').trim()
-  };
+  let patient=selected;
+  try{const saved=JSON.parse(sessionStorage.getItem('emiasSelectedIncoming')||'null');if(saved)patient=saved;}catch(e){}
+  if(!patient||!patient.fio){alert('Сначала выберите пациента в списке поступающих');return;}
+  patient={ckg:patient.ckg||'',fio:patient.fio||'',channel:patient.channel||'103',dob:patient.dob||'',sex:patient.sex||''};
   selected={...patient};
-  document.getElementById('walkinPanel').classList.add('hidden');
-  document.getElementById('incomingPanel').classList.add('hidden');
-  document.getElementById('card').classList.remove('hidden');
+
+  walkinPanel.classList.add('hidden');
+  incomingPanel.classList.add('hidden');
+  card.classList.remove('hidden');
   resetCard();
   selected={...patient};
-  setActiveMenu('incoming'); setTopTitle('Поступающие');
-  const p=patient.fio.trim().split(/\s+/);
-  document.getElementById('surname').value=p[0]||'';
-  document.getElementById('name').value=p[1]||'';
-  document.getElementById('patronymic').value=p.slice(2).join(' ')||'';
-  document.getElementById('dob').value=patient.dob;
-  document.getElementById('ckg').value=patient.ckg;
-  document.getElementById('channel').value=patient.channel;
+  setActiveMenu('incoming');
+  setTopTitle('Поступающие');
+
+  function applyIncomingPatient(){
+    fillFio(patient.fio);
+    const d=document.getElementById('dob'); if(d)d.value=patient.dob;
+    const c=document.getElementById('ckg'); if(c)c.value=patient.ckg;
+    const ch=document.getElementById('channel'); if(ch)ch.value=patient.channel;
+    const sx=document.getElementById('sex'); if(sx)sx.value=patient.sex;
+    document.querySelectorAll('input[name="sexRadio"]').forEach(r=>r.checked=(r.value===patient.sex));
+    const e=document.getElementById('extra'); if(e)e.value='';
+  }
+
   applyChannelFields(patient.channel);
-  document.getElementById('sex').value=patient.sex;
-  document.querySelectorAll('input[name="sexRadio"]').forEach(r=>r.checked=(r.value===patient.sex));
-  document.getElementById('extra').value='';
   document.querySelectorAll('.pane').forEach(x=>x.classList.remove('on'));
   document.getElementById('main').classList.add('on');
   document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('on'));
   document.querySelectorAll('.tabs button')[0].classList.add('on');
-}
 
+  applyIncomingPatient();
+  requestAnimationFrame(applyIncomingPatient);
+  setTimeout(applyIncomingPatient,50);
+}
 function setActiveMenu(which){menuIncoming.classList.toggle('active',which==='incoming');menuWalkin.classList.toggle('active',which==='walkin')}
 function setTopTitle(section){document.querySelector('.appTop').textContent='☰ КИС ЕМИАС [Приемное отделение] - ['+section+']'}
 function showIncoming(){card.classList.add('hidden');walkinPanel.classList.add('hidden');incomingPanel.classList.remove('hidden');setActiveMenu('incoming');setTopTitle('Поступающие')}
