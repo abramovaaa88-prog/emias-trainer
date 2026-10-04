@@ -141,15 +141,131 @@
 #card .registerBottom{position:fixed!important;right:42px!important;bottom:64px!important;z-index:10050!important;width:155px!important;height:36px!important}
 #card .registerBottom.enabled{background:#76b82a!important;cursor:pointer!important}
 .trainingMark{z-index:10000!important}
+
+/* === ОБРАТИВШИЕСЯ: компоновка по предоставленному референсу === */
+#walkinPanel.walkinPanel{width:100%;max-width:none;margin:0;border:0;box-shadow:none;min-height:calc(100vh - 42px);background:#fff}
+#walkinPanel .windowTitle,#walkinPanel .walkinInfo{display:none}
+#walkinPanel .walkinBody{padding:0}
+.walkinRefToolbar{height:58px;background:#0783ad;display:flex;align-items:center;gap:8px;padding:8px 12px;color:#fff;border-bottom:1px solid #65b7d0;position:relative}
+.walkinRefSearch{display:flex;width:285px;height:34px;background:#fff;border:1px solid #6fa8ba}
+.walkinRefSearch input{flex:1;min-width:0;border:0;outline:0;padding:0 9px}
+.walkinRefSearch button{width:34px;border:0;border-left:1px solid #b8cbd1;background:#fff;color:#087da5;font-size:18px;cursor:pointer}
+.walkinToolbarIcons{margin-left:auto;display:flex;align-items:center;gap:5px}
+.walkinTopIcon{border:0;background:transparent;color:#fff;font-size:21px;padding:4px 6px;cursor:pointer}
+.walkinUser{font-size:12px;white-space:nowrap;margin-left:5px}
+.walkinPlusWrap{position:relative}
+.walkinPlusRef{width:38px;height:35px;border:1px solid #d27b08;background:#ef971f;color:#fff;font-size:25px;line-height:30px;cursor:pointer}
+.walkinPlusMenu{display:none;position:absolute;right:0;top:39px;width:255px;background:#fff;border:1px solid #b8c5c9;box-shadow:0 3px 10px rgba(0,0,0,.22);z-index:100;color:#52666c}
+.walkinPlusMenu.show{display:block}
+.walkinPlusMenu button{display:block;width:100%;border:0;background:#fff;text-align:left;padding:9px 12px;color:#52666c;font-size:12px;cursor:pointer}
+.walkinPlusMenu button:hover{background:#edf5f8}
+.walkinTableWrap{height:calc(100vh - 100px);overflow:auto;background:#fff}
+.walkinRefTable{width:100%;border-collapse:collapse;color:#536d75;font-size:11px;table-layout:auto}
+.walkinRefTable th{position:sticky;top:0;z-index:2;background:#d6edf5;border-right:1px solid #edf5f7;border-bottom:1px solid #bdd5de;padding:5px 6px;font-weight:normal;text-align:center;white-space:normal;line-height:1.05}
+.walkinRefTable td{height:35px;padding:4px 6px;border-right:1px solid #edf2f4;border-bottom:1px solid #e2e8ea;white-space:nowrap;text-align:center}
+.walkinRefTable tbody tr:nth-child(even){background:#f8fbfc}
+.walkinRefTable tbody tr:hover{background:#eaf5f8}
+.walkinRefTable tbody tr.sel{background:#f8dfc8}
+.walkinActions{white-space:nowrap;text-align:left!important;min-width:112px}
+.walkinMini{display:inline-flex;width:17px;height:17px;align-items:center;justify-content:center;border:1px solid #7ea9b5;margin-right:2px;background:#fff;color:#26788e;font-size:10px}
+.walkinMini.red{border-color:#d08a92;color:#b63d50}.walkinMini.orange{border-color:#d6a25b;color:#b97817}
+.walkinSex{font-size:18px;font-weight:bold}.walkinSex.m{color:#1689b9}.walkinSex.f{color:#d94b88}
+.walkinDot{display:inline-block;width:13px;height:13px;border-radius:50%;background:#e9b22c}
+.walkinLeftZones{margin-top:20px;border-top:1px solid rgba(255,255,255,.75);padding:10px 10px 0;color:#fff;font-size:12px}
+.walkinLeftZonesTitle{margin-bottom:9px}
+.walkinZones{display:flex;gap:12px}
+.walkinZone{background:#80c42b;color:#fff;padding:4px 9px;text-align:center;min-width:58px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.25)}
+
 </style></head><body>
 <section id="loginScreen"><div class="loginWin"><div class="loginHead">☰ &nbsp; КИС ЕМИАС <span style="float:right">— &nbsp; ×</span></div><div class="loginBody"><div class="loginBrand"><div class="keys">⚿</div><div class="ver">Версия:<br>2.1.110.32030</div></div><div class="loginForm"><div class="lr"><label>Логин:</label><input id="login"></div><div class="lr"><label>Пароль:</label><input id="password" type="password"></div><select id="lang" class="lang"><option>RUS</option></select><div class="loginBtns"><button onclick="doLogin()">OK</button><button onclick="clearLogin()">Отмена</button></div></div></div></div></section>
-<section id="app" class="hidden"><div class="appTop">☰ КИС ЕМИАС [Приемное отделение] - [Поступающие]</div><div class="layout"><aside class="sidebar"><div class="logo">ЕМИАС</div><div id="menuWalkin" class="menuItem clickable" onclick="showWalkins()">Обратившиеся</div><div id="menuIncoming" class="menuItem active clickable" onclick="showIncoming()">Поступающие</div><div class="menuItem inactive">Назначения</div><div class="menuItem inactive">Лист ожидания госпитализации</div><div class="menuItem inactive">Выполненные планы</div><div class="menuItem inactive">Направления в стационар</div><div class="menuItem inactive">Все госпитализированные</div><div class="menuItem inactive">Выписанные</div><div class="menuItem inactive">Отказы</div><div class="menuItem inactive">Все пациенты</div><div class="menuItem inactive">Отчёты</div><div id="menuExam" class="menuItem clickable examMenu" onclick="startExam()">Экзамен</div></aside><main class="workspace"><div id="examBar" class="examBar"><div><b id="examTitle"></b><div class="examTaskHint" id="examHint"></div></div><button class="examBtn" onclick="showExamDocuments()">Документы задания</button></div>
+<section id="app" class="hidden"><div class="appTop">☰ КИС ЕМИАС [Приемное отделение] - [Поступающие]</div><div class="layout"><aside class="sidebar"><div class="logo">ЕМИАС</div><div id="menuWalkin" class="menuItem clickable" onclick="showWalkins()">Обратившиеся</div><div id="menuIncoming" class="menuItem active clickable" onclick="showIncoming()">Поступающие</div><div class="menuItem inactive">Назначения</div><div class="menuItem inactive">Лист ожидания госпитализации</div><div class="menuItem inactive">Выполненные планы</div><div class="menuItem inactive">Направления в стационар</div><div class="menuItem inactive">Все госпитализированные</div><div class="menuItem inactive">Выписанные</div><div class="menuItem inactive">Отказы</div><div class="menuItem inactive">Все пациенты</div><div class="menuItem inactive">Отчёты</div><div id="menuExam" class="menuItem clickable examMenu" onclick="startExam()">Экзамен</div><div class="walkinLeftZones"><div class="walkinLeftZonesTitle">Лечебные зоны ПДО</div><div class="walkinZones"><div><div>Жёлтая</div><div class="walkinZone">1/0</div></div><div><div>Зелёная</div><div class="walkinZone">1/0</div></div></div></div></aside><main class="workspace"><div id="examBar" class="examBar"><div><b id="examTitle"></b><div class="examTaskHint" id="examHint"></div></div><button class="examBtn" onclick="showExamDocuments()">Документы задания</button></div>
 <div id="walkinPanel" class="walkinPanel hidden">
-<div class="windowTitle">Обратившиеся</div>
 <div class="walkinBody">
-  <div class="walkinInfo">Регистрация пациентов, обратившихся в приемное отделение самостоятельно.</div>
-  <div class="walkinToolbar"><button class="plusBtn" title="Зарегистрировать самотёк" onclick="newWalkin()">+</button></div>
-  <div class="walkinEmpty" id="walkinEmpty">&lt;нет зарегистрированных обращений&gt;</div>
+  <div class="walkinRefToolbar">
+    <div class="walkinRefSearch"><input id="walkinSearch"><button title="Поиск">⌕</button><button onclick="document.getElementById('walkinSearch').value=''">×</button></div>
+    <div class="walkinToolbarIcons">
+      <div class="walkinPlusWrap">
+        <button class="walkinPlusRef" onclick="toggleWalkinPlusMenu(event)" title="Регистрация пациента">+</button>
+        <div id="walkinPlusMenu" class="walkinPlusMenu">
+          <button onclick="newWalkin();hideWalkinPlusMenu()">Регистрация экстренного пациента</button>
+          <button onclick="newWalkin();hideWalkinPlusMenu()">Регистрация запланированного пациента</button>
+        </div>
+      </div>
+      <button class="walkinTopIcon" title="Печать">▤</button>
+      <button class="walkinTopIcon" title="Настройки">⚙</button>
+      <button class="walkinTopIcon" title="Обновить">↻</button>
+      <span class="walkinUser">👤 Администратор ▾</span>
+    </div>
+  </div>
+  <div class="walkinTableWrap">
+    <table class="walkinRefTable">
+      <thead><tr>
+        <th style="width:118px"></th><th>Пол</th><th>Возраст</th><th>Дата<br>рождения</th><th>Рег. номер<br>ИБ</th>
+        <th>Дата и время<br>регистрации</th><th>Время<br>ожидания</th><th>Статус<br>пациента</th>
+        <th>Профиль</th><th>Диагноз<br>при поступлении</th><th>Диагноз<br>врача</th><th>Врач</th>
+      </tr></thead>
+      <tbody><tr class="sel">
+<td class="walkinActions"><span class="walkinMini orange">▣</span><span class="walkinMini">▤</span><span class="walkinMini">↔</span><span class="walkinMini red">▣</span><span class="walkinMini">✓</span></td>
+<td><span class="walkinSex f">♀</span></td><td>64</td><td>21.02.1967</td><td>442248-01</td><td>02.10.2026 07:29</td><td>Т:05</td><td><span class="walkinDot"></span></td><td>Хирургия</td><td>K85.9</td><td>K85.9</td><td>Шишова...</td>
+</tr>
+<tr>
+<td class="walkinActions"><span class="walkinMini orange">▣</span><span class="walkinMini">▤</span><span class="walkinMini">↔</span><span class="walkinMini red">▣</span><span class="walkinMini">✓</span></td>
+<td><span class="walkinSex m">♂</span></td><td>83</td><td>17.03.1943</td><td>442418-</td><td>02.10.2026 08:33</td><td>0:01</td><td><span class="walkinDot"></span></td><td>Урология</td><td>N30.9</td><td></td><td></td>
+</tr>
+<tr>
+<td class="walkinActions"><span class="walkinMini orange">▣</span><span class="walkinMini">▤</span><span class="walkinMini">↔</span><span class="walkinMini red">▣</span><span class="walkinMini">✓</span></td>
+<td><span class="walkinSex f">♀</span></td><td>54</td><td>20.08.1972</td><td>442411-</td><td>02.10.2026 08:52</td><td>0:02</td><td><span class="walkinDot"></span></td><td>Оторинол...</td><td>D14.0</td><td></td><td></td>
+</tr>
+<tr>
+<td class="walkinActions"><span class="walkinMini orange">▣</span><span class="walkinMini">▤</span><span class="walkinMini">↔</span><span class="walkinMini red">▣</span><span class="walkinMini">✓</span></td>
+<td><span class="walkinSex m">♂</span></td><td>40</td><td>27.07.1986</td><td>442302-</td><td>02.10.2026 08:23</td><td>0:11</td><td><span class="walkinDot"></span></td><td>Оторинол...</td><td>J30.0</td><td></td><td></td>
+</tr>
+<tr>
+<td class="walkinActions"><span class="walkinMini orange">▣</span><span class="walkinMini">▤</span><span class="walkinMini">↔</span><span class="walkinMini red">▣</span><span class="walkinMini">✓</span></td>
+<td><span class="walkinSex f">♀</span></td><td>31</td><td>26.08.1995</td><td>442383-</td><td>02.10.2026 08:21</td><td>0:13</td><td><span class="walkinDot"></span></td><td>Оторинол...</td><td>J30.0</td><td></td><td></td>
+</tr>
+<tr>
+<td class="walkinActions"><span class="walkinMini orange">▣</span><span class="walkinMini">▤</span><span class="walkinMini">↔</span><span class="walkinMini red">▣</span><span class="walkinMini">✓</span></td>
+<td><span class="walkinSex m">♂</span></td><td>75</td><td>03.08.1951</td><td>442373-</td><td>02.10.2026 08:27</td><td>0:18</td><td><span class="walkinDot"></span></td><td>Урология</td><td>N35.1</td><td></td><td></td>
+</tr>
+<tr>
+<td class="walkinActions"><span class="walkinMini orange">▣</span><span class="walkinMini">▤</span><span class="walkinMini">↔</span><span class="walkinMini red">▣</span><span class="walkinMini">✓</span></td>
+<td><span class="walkinSex f">♀</span></td><td>44</td><td>08.08.1982</td><td>442360-</td><td>02.10.2026 08:16</td><td>0:18</td><td><span class="walkinDot"></span></td><td>Травматол...</td><td>T92.1</td><td></td><td></td>
+</tr>
+<tr>
+<td class="walkinActions"><span class="walkinMini orange">▣</span><span class="walkinMini">▤</span><span class="walkinMini">↔</span><span class="walkinMini red">▣</span><span class="walkinMini">✓</span></td>
+<td><span class="walkinSex m">♂</span></td><td>39</td><td>19.04.1987</td><td>442364-</td><td>02.10.2026 08:14</td><td>0:20</td><td><span class="walkinDot"></span></td><td>Оторинол...</td><td>J30.0</td><td></td><td></td>
+</tr>
+<tr>
+<td class="walkinActions"><span class="walkinMini orange">▣</span><span class="walkinMini">▤</span><span class="walkinMini">↔</span><span class="walkinMini red">▣</span><span class="walkinMini">✓</span></td>
+<td><span class="walkinSex f">♀</span></td><td>44</td><td>27.07.1982</td><td>442356-</td><td>02.10.2026 08:11</td><td>0:23</td><td><span class="walkinDot"></span></td><td>Хирургия</td><td>K83.9</td><td></td><td></td>
+</tr>
+<tr>
+<td class="walkinActions"><span class="walkinMini orange">▣</span><span class="walkinMini">▤</span><span class="walkinMini">↔</span><span class="walkinMini red">▣</span><span class="walkinMini">✓</span></td>
+<td><span class="walkinSex m">♂</span></td><td>76</td><td>30.05.1950</td><td>442328-</td><td>02.10.2026 08:03</td><td>0:30</td><td><span class="walkinDot"></span></td><td>Урология</td><td>N30.2</td><td></td><td></td>
+</tr>
+<tr>
+<td class="walkinActions"><span class="walkinMini orange">▣</span><span class="walkinMini">▤</span><span class="walkinMini">↔</span><span class="walkinMini red">▣</span><span class="walkinMini">✓</span></td>
+<td><span class="walkinSex f">♀</span></td><td>21</td><td>08.12.2004</td><td>442315-</td><td>02.10.2026 08:20</td><td>0:34</td><td><span class="walkinDot"></span></td><td>Урология</td><td>N43.0</td><td></td><td></td>
+</tr>
+<tr>
+<td class="walkinActions"><span class="walkinMini orange">▣</span><span class="walkinMini">▤</span><span class="walkinMini">↔</span><span class="walkinMini red">▣</span><span class="walkinMini">✓</span></td>
+<td><span class="walkinSex m">♂</span></td><td>73</td><td>01.01.1953</td><td>442311-</td><td>02.10.2026 07:59</td><td>0:35</td><td><span class="walkinDot"></span></td><td>Урология</td><td>N30.2</td><td></td><td></td>
+</tr>
+<tr>
+<td class="walkinActions"><span class="walkinMini orange">▣</span><span class="walkinMini">▤</span><span class="walkinMini">↔</span><span class="walkinMini red">▣</span><span class="walkinMini">✓</span></td>
+<td><span class="walkinSex f">♀</span></td><td>34</td><td>09.07.1992</td><td>442305-</td><td>02.10.2026 08:56</td><td>0:36</td><td><span class="walkinDot"></span></td><td>Урология</td><td>N13.3</td><td></td><td></td>
+</tr>
+<tr>
+<td class="walkinActions"><span class="walkinMini orange">▣</span><span class="walkinMini">▤</span><span class="walkinMini">↔</span><span class="walkinMini red">▣</span><span class="walkinMini">✓</span></td>
+<td><span class="walkinSex m">♂</span></td><td>43</td><td>06.07.1983</td><td>442306-</td><td>02.10.2026 07:58</td><td>0:36</td><td><span class="walkinDot"></span></td><td>Оторинол...</td><td>J30.0</td><td></td><td></td>
+</tr>
+<tr>
+<td class="walkinActions"><span class="walkinMini orange">▣</span><span class="walkinMini">▤</span><span class="walkinMini">↔</span><span class="walkinMini red">▣</span><span class="walkinMini">✓</span></td>
+<td><span class="walkinSex f">♀</span></td><td>45</td><td>28.05.1981</td><td>442299-</td><td>02.10.2026 07:56</td><td>0:38</td><td><span class="walkinDot"></span></td><td>Урология</td><td>N13.3</td><td></td><td></td>
+</tr></tbody>
+    </table>
+  </div>
 </div>
 </div>
 <div id="incomingPanel" class="incomingPanel"><div class="incomingRefToolbar"><div class="incomingSearch"><input id="incomingSearch"><button>⌕</button><button onclick="incomingSearch.value=''">×</button></div><span class="refArrow">‹</span><input class="refDate" value="30.09.2026"><input class="refDate" value="02.10.2026"><span class="refArrow">→</span><button class="refNewPatient incomingPlus" onclick="openSelected()" title="Открыть выбранного пациента">+</button><span class="refSources">Все источники ▾</span><button class="refIcon">▣</button><button class="refIcon">⚙</button><button class="refIcon">▤</button><button class="refIcon">↻</button><span class="refUser">👤 Администратор ▾</span></div><div class="incomingWrap"><table class="incoming"><thead><tr><th>Пол</th><th>Канал</th><th>ЦКГ</th><th>Дата и время</th><th>ФИО</th><th>Диагноз</th><th>Возраст</th><th>Профиль</th><th>Направлен из</th></tr></thead><tbody><tr data-dob="14.03.1948" data-sex="Муж." onclick="selectRow(this,'610617941','Петров Алексей Игоревич','103',this.dataset.dob,this.dataset.sex)"><td class="sexIcon sexM">♂</td><td>103</td><td>610617941</td><td>02.10.2026 08:00</td><td>Петров Алексей Игоревич</td><td>Дивертикулит</td><td>78 лет</td><td>Хирургия</td><td>ГКБ №15</td></tr><tr data-dob="21.07.1988" data-sex="Жен." onclick="selectRow(this,'610300654','Соколова Елена Андреевна','103 поликлиника',this.dataset.dob,this.dataset.sex)"><td class="sexIcon sexF">♀</td><td>103 поликлиника</td><td>610300654</td><td>02.10.2026 08:18</td><td>Соколова Елена Андреевна</td><td>Перелом лучевой кости</td><td>38 лет</td><td>Травматология</td><td>ЖК №3</td></tr><tr data-dob="05.11.1966" data-sex="Муж." onclick="selectRow(this,'610301208','Иванов Сергей Петрович','103',this.dataset.dob,this.dataset.sex)"><td class="sexIcon sexM">♂</td><td>103</td><td>610301208</td><td>02.10.2026 08:36</td><td>Иванов Сергей Петрович</td><td>Ушиб мягких тканей</td><td>60 лет</td><td>Травматология</td><td>Поликлиника №12</td></tr><tr data-dob="09.02.1980" data-sex="Жен." onclick="selectRow(this,'610300490','Орлова Ирина Павловна','103',this.dataset.dob,this.dataset.sex)"><td class="sexIcon sexF">♀</td><td>103</td><td>610300490</td><td>02.10.2026 09:12</td><td>Орлова Ирина Павловна</td><td>Острый аппендицит</td><td>46 лет</td><td>Хирургия</td><td>ГКБ №24</td></tr><tr data-dob="17.06.1984" data-sex="Муж." onclick="selectRow(this,'610305112','Смирнов Андрей Викторович','103',this.dataset.dob,this.dataset.sex)"><td class="sexIcon sexM">♂</td><td>103</td><td>610305112</td><td>02.10.2026 09:30</td><td>Смирнов Андрей Викторович</td><td>Пневмония</td><td>42 лет</td><td>Терапия</td><td>СМП</td></tr><tr data-dob="28.09.1981" data-sex="Муж." onclick="selectRow(this,'610306773','Морозов Дмитрий Олегович','103',this.dataset.dob,this.dataset.sex)"><td class="sexIcon sexM">♂</td><td>103</td><td>610306773</td><td>02.10.2026 10:06</td><td>Морозов Дмитрий Олегович</td><td>Перелом шейки бедра</td><td>45 лет</td><td>Травматология</td><td>ГКБ №67</td></tr><tr data-dob="12.12.1985" data-sex="Жен." onclick="selectRow(this,'610307004','Фёдорова Анна Ильинична','103 поликлиника',this.dataset.dob,this.dataset.sex)"><td class="sexIcon sexF">♀</td><td>103 поликлиника</td><td>610307004</td><td>02.10.2026 10:24</td><td>Фёдорова Анна Ильинична</td><td>Люмбалгия</td><td>40 лет</td><td>Терапия</td><td>Поликлиника №5</td></tr><tr data-dob="03.04.1969" data-sex="Муж." onclick="selectRow(this,'610307225','Николаев Павел Романович','103',this.dataset.dob,this.dataset.sex)"><td class="sexIcon sexM">♂</td><td>103</td><td>610307225</td><td>02.10.2026 10:42</td><td>Николаев Павел Романович</td><td>Острый холецистит</td><td>57 лет</td><td>Хирургия</td><td>СМП</td></tr><tr data-dob="25.01.1990" data-sex="Муж." onclick="selectRow(this,'610307661','Лебедев Максим Андреевич','103',this.dataset.dob,this.dataset.sex)"><td class="sexIcon sexM">♂</td><td>103</td><td>610307661</td><td>02.10.2026 11:18</td><td>Лебедев Максим Андреевич</td><td>Закрытая травма голеностопного сустава</td><td>36 лет</td><td>Травматология</td><td>ЖК №3</td></tr><tr data-dob="08.08.1962" data-sex="Жен." onclick="selectRow(this,'610308002','Семёнова Татьяна Петровна','103',this.dataset.dob,this.dataset.sex)"><td class="sexIcon sexF">♀</td><td>103</td><td>610308002</td><td>02.10.2026 11:36</td><td>Семёнова Татьяна Петровна</td><td>Внебольничная пневмония</td><td>64 лет</td><td>Терапия</td><td>Поликлиника №12</td></tr><tr data-dob="19.05.1959" data-sex="Жен." onclick="selectRow(this,'610308440','Павлова Елена Николаевна','103',this.dataset.dob,this.dataset.sex)"><td class="sexIcon sexF">♀</td><td>103</td><td>610308440</td><td>02.10.2026 12:12</td><td>Павлова Елена Николаевна</td><td>Пароксизм фибрилляции предсердий</td><td>67 лет</td><td>Терапия</td><td>ГКБ №24</td></tr><tr data-dob="30.10.1996" data-sex="Муж." onclick="selectRow(this,'610308771','Козлов Артём Денисович','103 поликлиника',this.dataset.dob,this.dataset.sex)"><td class="sexIcon sexM">♂</td><td>103 поликлиника</td><td>610308771</td><td>02.10.2026 12:30</td><td>Козлов Артём Денисович</td><td>Перелом лучевой кости</td><td>29 лет</td><td>Травматология</td><td>СМП</td></tr><tr data-dob="11.01.1971" data-sex="Жен." onclick="selectRow(this,'610309105','Степанова Марина Юрьевна','103',this.dataset.dob,this.dataset.sex)"><td class="sexIcon sexF">♀</td><td>103</td><td>610309105</td><td>02.10.2026 12:48</td><td>Степанова Марина Юрьевна</td><td>Острый панкреатит</td><td>55 лет</td><td>Хирургия</td><td>Самообращение</td></tr><tr data-dob="06.06.1955" data-sex="Жен." onclick="selectRow(this,'610309660','Васильева Светлана Олеговна','103',this.dataset.dob,this.dataset.sex)"><td class="sexIcon sexF">♀</td><td>103</td><td>610309660</td><td>02.10.2026 13:24</td><td>Васильева Светлана Олеговна</td><td>Обострение бронхиальной астмы</td><td>71 лет</td><td>Терапия</td><td>Поликлиника №5</td></tr><tr data-dob="15.09.1992" data-sex="Муж." onclick="selectRow(this,'610309881','Зайцев Роман Павлович','103',this.dataset.dob,this.dataset.sex)"><td class="sexIcon sexM">♂</td><td>103</td><td>610309881</td><td>02.10.2026 13:42</td><td>Зайцев Роман Павлович</td><td>Ушиб мягких тканей</td><td>34 лет</td><td>Травматология</td><td>СМП</td></tr><tr data-dob="27.02.1964" data-sex="Муж." onclick="selectRow(this,'610310224','Макаров Денис Евгеньевич','103',this.dataset.dob,this.dataset.sex)"><td class="sexIcon sexM">♂</td><td>103</td><td>610310224</td><td>02.10.2026 14:18</td><td>Макаров Денис Евгеньевич</td><td>Почечная колика</td><td>48 лет</td><td>Хирургия</td><td>ЖК №3</td></tr><tr data-dob="04.07.1978" data-sex="Жен." onclick="selectRow(this,'610310558','Андреева Ирина Михайловна','103 поликлиника',this.dataset.dob,this.dataset.sex)"><td class="sexIcon sexF">♀</td><td>103 поликлиника</td><td>610310558</td><td>02.10.2026 14:36</td><td>Андреева Ирина Михайловна</td><td>Перелом шейки бедра</td><td>52 лет</td><td>Травматология</td><td>Поликлиника №12</td></tr><tr data-dob="22.11.1974" data-sex="Муж." onclick="selectRow(this,'610310902','Ковалёв Александр Петрович','103',this.dataset.dob,this.dataset.sex)"><td class="sexIcon sexM">♂</td><td>103</td><td>610310902</td><td>02.10.2026 14:54</td><td>Ковалёв Александр Петрович</td><td>Острая сердечная недостаточность</td><td>31 лет</td><td>Терапия</td><td>Самообращение</td></tr></tbody></table></div></div>
@@ -202,6 +318,21 @@
 </div></div></main></div></section>
 <div id="pdoModal" class="modal"><div class="modalBox pdoBox"><div class="modalTitle">Специализация ПДО</div><div class="modalContent"><input id="pdoQ" class="pdoSearch" oninput="renderPDO()"><div id="pdoList" class="pdoList"></div></div></div></div>
 <div id="icdModal" class="modal"><div class="modalBox icdBox"><div class="modalTitle">Справочник МКБ-10 — учебный</div><div class="modalContent"><input id="icdQ" class="pdoSearch" placeholder="Поиск по коду или наименованию" oninput="renderICD()"><table class="icdTable"><thead><tr><th style="width:120px">Код</th><th>Наименование</th></tr></thead><tbody id="icdList"></tbody></table></div></div></div><div id="examDocsOverlay" class="examOverlay"><div class="examModal"><div class="examModalHead"><span>Документы пациента — учебный комплект</span><span class="examClose" onclick="hideExamDocuments()">×</span></div><div id="examDocsBody" class="examModalBody"></div></div></div><div id="examResultOverlay" class="examOverlay"><div class="examModal"><div class="examModalHead"><span>Итоговый протокол экзамена</span><span class="examClose" onclick="closeExamResult()">×</span></div><div id="examResultBody" class="examModalBody"></div></div></div><div class="noticeTrain">УЧЕБНЫЙ ТРЕНАЖЁР — НЕ ЕМИАС • Все данные вымышлены</div><script>
+
+function toggleWalkinPlusMenu(e){
+  if(e)e.stopPropagation();
+  const m=document.getElementById('walkinPlusMenu');
+  if(m)m.classList.toggle('show');
+}
+function hideWalkinPlusMenu(){
+  const m=document.getElementById('walkinPlusMenu');
+  if(m)m.classList.remove('show');
+}
+document.addEventListener('click',function(e){
+  const wrap=e.target.closest&&e.target.closest('.walkinPlusWrap');
+  if(!wrap)hideWalkinPlusMenu();
+});
+
 const incomingDobByCkg={"610617941": "14.03.1948", "610300654": "21.07.1988", "610301208": "05.11.1966", "610300490": "09.02.1980", "610305112": "17.06.1984", "610306773": "28.09.1981", "610307004": "12.12.1985", "610307225": "03.04.1969", "610307661": "25.01.1990", "610308002": "08.08.1962", "610308440": "19.05.1959", "610308771": "30.10.1996", "610309105": "11.01.1971", "610309660": "06.06.1955", "610309881": "15.09.1992", "610310224": "27.02.1964", "610310558": "04.07.1978", "610310902": "22.11.1974"};
 
 function formatDob(el){
