@@ -189,6 +189,20 @@
 .postRegBottom{margin-top:180px;border-top:1px solid #d4d4d4;padding-top:8px}
 .postRegFolder{display:flex;gap:4px}.postRegFolder input{flex:1}.postRegFolder button{width:38px;border:1px solid #9cabb0;background:#f5f1d4}
 .postRegSave{float:right;width:150px;height:36px;margin-top:4px;background:#72bd18;border:1px solid #65a913;color:#fff;font-size:15px;cursor:pointer}
+
+/* === PERSONAL DATA reference workflow === */
+.refPD{padding:12px 20px 80px;background:#fff;color:#53686e;font-size:13px}
+.refPDTop{display:flex;justify-content:space-between;border-bottom:1px solid #d8e0e2;padding:4px 6px 10px;margin-bottom:7px}
+.refPDFio{font-size:20px}.refPDMeta{text-align:right;font-size:11px;line-height:1.55}
+.refPDRow{display:grid;grid-template-columns:180px minmax(300px,1fr) 72px;align-items:center;min-height:36px;border-bottom:1px solid #e1e8ea}
+.refPDLabel{text-align:right;padding-right:12px}.refPDValue{border:1px solid #bdcbd0;background:#fbfdfd;min-height:28px;padding:5px 8px}
+.refPDActions{display:flex;gap:3px;padding-left:5px}.refPDEdit{height:25px;min-width:34px;border:1px solid #9eb1b7;background:#f5f9fa;color:#4c717b;cursor:pointer;font-weight:bold}
+.refPDEdit:hover{background:#e5f1f4}.refPDTitle{background:#e8f3f6;border-bottom:1px solid #cad8dc;padding:7px 9px;font-weight:bold;margin-top:9px}
+.refPDEditor{display:none;background:#f7fafb;border-bottom:1px solid #d6e0e3;padding:9px 78px 10px 180px}.refPDEditor.open{display:block}
+.refPDGrid{display:grid;grid-template-columns:100px 150px 90px 190px 100px 155px;gap:6px 7px;align-items:center}
+.refPDGrid label{text-align:right}.refPDGrid input,.refPDGrid select{height:28px;border:1px solid #a8b9be;background:#fff;padding:3px 6px;min-width:0}
+.refPDIssued{grid-column:2/7}.refPDSave{display:flex;justify-content:flex-end;align-items:center;margin-top:8px}.refPDSave small{margin-right:8px}
+.refPDDisk{width:34px;height:28px;border:1px solid #5c9d27;background:#76bd20;color:#fff;cursor:pointer;font-size:16px}
 </style></head><body>
 
 <div id="modeScreen" style="display:none;position:fixed;inset:0;background:#f7f7f7;z-index:99999;align-items:center;justify-content:center;font-family:Arial,sans-serif">
@@ -358,7 +372,33 @@
 <div class="postRegRow"><label>Зарегистрировал:</label><input id="postRegisteredBy" readonly></div>
 <button class="postRegSave" onclick="finishRegistration()">Сохранить</button><div style="clear:both"></div>
 </div></div>
-</div><div id="personal" class="pane"><div class="meta">Вид оплаты: ОМС &nbsp;&nbsp;&nbsp; № документа: <span id="metaDoc">7757240878001728</span> &nbsp;&nbsp;&nbsp; Рег.№: 442248-2026 &nbsp;&nbsp;&nbsp; Дата: 02.10.2026 07:29<br>ЕРЗЛ <span id="pErzl">○</span><br>ЕРП <span class="checkmark">●</span></div><div class="age"><span id="pAge">69 лет</span> &nbsp; Дата рождения: <span id="pDob">21.02.1957</span></div><div class="personalScroll"><div class="formGrid ref"><label>Вид оплаты:</label><select class="f"><option>ОМС</option></select><label>Без документа:</label><div>○ &nbsp; ВМП: ○</div><label>Документ основной:</label><div class="iconCell span3"><input class="f"><button class="miniIcon">▱</button><button class="miniIcon">✓</button><button class="miniIcon">＋</button><button class="miniIcon">⊗</button></div><label>Документ удост. личность:</label><div class="iconCell span3"><select class="f"><option></option><option>Паспорт гражданина РФ</option></select><button class="miniIcon">✓</button><button class="miniIcon">＋</button><button class="miniIcon">⊗</button></div><div class="sectionLine"></div><label>Место рождения:</label><input class="f"><label>*Гражданство:</label><select class="f"><option></option><option>Российская Федерация</option></select><label>Социальный статус:</label><select class="f"><option></option><option>Работающий</option><option>Пенсионер</option><option>Учащийся</option></select><div></div><div></div><div class="sectionLine"></div><label>Адрес регистрации:</label><div class="iconCell span3"><input class="f"><button class="miniIcon">✓</button><button class="miniIcon">✥</button><button class="miniIcon">⊗</button></div><label>Адрес проживания:</label><div class="iconCell span3"><input class="f"><button class="miniIcon">✓</button><button class="miniIcon">⊗</button></div><div class="sectionLine"></div><label>Телефон пациента:</label><input class="f"><label>Контактная информация:</label><input class="f"><label>Контактное лицо:</label><div class="iconCell span3"><input class="f"><button class="miniIcon">✓</button><button class="miniIcon">＋</button><button class="miniIcon">⊗</button></div><label>Местность:</label><select class="f"><option></option></select><label>Региональная принадл.:</label><select class="f"><option></option></select><div class="sectionLine"></div><label>Место работы/учебы:</label><input class="f"><label>Должность:</label><input class="f"><label>Подразделение (№ группы, класс, буква, курс, цех):</label><input class="f"><label>Адрес организации:</label><input class="f"><label>Образование:</label><select class="f"><option></option></select><div></div><div></div><label>Инвалидность:</label><select class="f"><option></option><option>I</option><option>II</option><option>III</option></select><label>Группа инвалидности:</label><select class="f"><option></option></select><label>Категория льготности:</label><select class="f span3"><option></option></select><label>Лицо, подвергшееся радиационному облучению:</label><input type="checkbox"><div></div><div></div><label>Семейное положение:</label><select class="f"><option></option></select><div></div><div></div><label>VIP:</label><input type="checkbox"><div></div><div></div><label>Отказ от передачи персональных данных:</label><input type="checkbox"></div></div><div id="examFields" class="examFields hidden"><b>Учебные реквизиты документа</b><div class="formGrid"><label>Тип документа:</label><select id="examDocumentType" class="f"><option></option><option>Паспорт гражданина РФ</option><option>Иностранный паспорт</option><option>Вид на жительство</option><option>Иностранная ID-карта</option></select><label>Серия:</label><input id="examPassportSeries" class="f"><label>Номер:</label><input id="examPassportNumber" class="f"><label>Гражданство:</label><input id="examCitizenship" class="f"><label>Адрес регистрации:</label><input id="examRegistrationAddress" class="f"><label>Адрес проживания:</label><input id="examResidenceAddress" class="f"><label>Повторная госпитализация:</label><select id="examRepeat" class="f"><option></option><option>Да</option><option>Нет</option></select></div></div><button class="save" onclick="saved(this)">Сохранить</button></div><div id="arrival" class="pane"><div class="meta">Вид оплаты: ОМС &nbsp;&nbsp;&nbsp; № документа: 7757240878001728 &nbsp;&nbsp;&nbsp; Рег.№: 442248-2026 &nbsp;&nbsp;&nbsp; Дата: 02.10.2026 07:29<br>ЕРЗЛ <span id="aErzl">○</span><br>ЕРП <span class="checkmark">●</span></div><div class="age">69 лет &nbsp; Дата рождения: 21.02.1957</div><div class="arrivalGrid"><label>Регион по ДЗМ-1400:</label><input class="f" value="г. Москва"><button class="ellipsis">…</button><label>* Канал обращения:</label><select id="channel" class="f" onchange="applyChannelFields(this.value)"><option>103</option><option>103 поликлиника</option><option>самотёк</option></select><button class="ellipsis">▾</button><label>Кем доставлен:</label><input id="deliveredBy" class="f" value="скорой помощью"><button class="ellipsis">…</button><label>Номер подстанции СМП:</label><input id="smpStation" class="f" value="66"><span></span><label>Госпитализирован в текущем году:</label><input class="f" value="Повторно"><button class="ellipsis">…</button><label>Тип госпитализации:</label><input class="f" value="Госпитализация по экстренным показаниям"><button class="ellipsis">…</button><label>ЦКГ:</label><input id="ckg" class="f" readonly><span></span><label>Доставлен в стационар от начала заболевания:</label><select class="f"><option></option><option>в первые 6 часов</option><option>7–24 часа</option><option>позднее 24 часов</option></select><button class="ellipsis">…</button><label>* Кем направлен:</label><input id="referredBy" class="f" value="Скорая помощь"><button class="ellipsis">…</button><label>Учреждение:</label><input id="refInstitution" class="f" value="СС и НМП им. А.С. Пучкова / СС и НМП им. А.С. Пучкова"><button class="ellipsis">…</button><label>Диагноз направившего:</label><input id="icdDiagnosis" class="f" readonly placeholder="выберите код МКБ"><button class="ellipsis" onclick="openICD()">…</button><label>Развернутый диагноз:</label><textarea class="f area"></textarea><span></span><label>Дата направления/наряда:</label><input class="f" value="02.10.2026"><button class="ellipsis">▾</button><label>Переведен из МО:</label><input class="f"><button class="ellipsis">…</button><label>Согласован перевод из другой МО:</label><input class="f"><button class="ellipsis">…</button><label>Вид травмы:</label><input class="f"><button class="ellipsis">…</button><label>Эпид №:</label><input class="f"><span></span><label>Вид транспортировки:</label><select class="f"><option>сидя</option><option>лежа</option><option>может идти</option></select><button class="ellipsis">▾</button><label>Дополнительные сведения о пациенте, имеющие значение для оказания МП:</label><textarea class="f area"></textarea><span></span><label>Педикулез:</label><select class="f"><option></option><option>нет</option><option>да</option></select><button class="ellipsis">▾</button><label>Чесотка:</label><select class="f"><option></option><option>нет</option><option>да</option></select><button class="ellipsis">▾</button><label><b>Санобработка</b><br>Проводилась:</label><select class="f"><option></option><option>нет</option><option>да</option></select><button class="ellipsis">▾</button></div><button class="save" onclick="saved(this)">Сохранить</button></div><div id="docs" class="pane"><div class="meta">Вид оплаты: ОМС &nbsp;&nbsp;&nbsp; № документа: 7757240878001728 &nbsp;&nbsp;&nbsp; Рег.№: 442248-2026 &nbsp;&nbsp;&nbsp; Дата: 02.10.2026 07:29<br>ЕРЗЛ <span id="dErzl">○</span><br>ЕРП <span class="checkmark">●</span></div><div class="age">69 лет &nbsp; Дата рождения: 21.02.1957</div><div id="scanState" class="scanState">Для добавления скана выполните сверку с ЕРЗЛ.</div><div class="docArea"><div id="docListArea"><table class="docs"><thead><tr><th style="width:85px"></th><th>Группа документов</th><th>Документ</th><th>Дата и время</th></tr></thead><tbody id="docsBody"></tbody></table><div id="docEmpty" class="docEmpty">&lt;нет данных&gt;</div></div><div id="preview" class="preview">Область предварительного просмотра</div></div><div class="docBtns"><button id="addDocBtn" onclick="addTrainingScan()" disabled>Добавить документ</button><button onclick="saved(this)">Сохранить</button></div></div></div>
+</div><div id="personal" class="pane">
+<div class="refPD">
+ <div class="refPDTop"><div><div id="rFio" class="refPDFio"></div><div id="rDob"></div></div><div class="refPDMeta">Вид оплаты: ОМС<br><span id="rPolicyMeta">№ документа: —</span><br><span id="rErzl">ЕРЗЛ: —</span></div></div>
+ <div class="refPDRow"><div class="refPDLabel">Вид оплаты:</div><div class="refPDValue">ОМС</div><div></div></div>
+ <div class="refPDRow"><div class="refPDLabel">Документ основной:</div><div id="rPolicy" class="refPDValue"></div><div></div></div>
+ <div class="refPDTitle">Документ, удостоверяющий личность</div>
+ <div class="refPDRow"><div class="refPDLabel">Документ удост. личности:</div><div id="rPassport" class="refPDValue"></div><div class="refPDActions"><button type="button" class="refPDEdit" onclick="rOpenPassport()" title="Редактировать">A✎</button></div></div>
+ <div id="rPassEditor" class="refPDEditor"><div class="refPDGrid">
+   <label>Тип документа:</label><select id="rDocType"><option>Паспорт гражданина Российской Федерации</option></select>
+   <label>Серия:</label><input id="rSeries"><label>Номер:</label><input id="rNumber">
+   <label>Дата выдачи:</label><input id="rIssueDate" placeholder="ДД.ММ.ГГГГ">
+   <label>Кем выдан:</label><input id="rIssued" class="refPDIssued">
+ </div><div class="refPDSave"><small>Для сохранения нажмите зелёную дискету</small><button type="button" class="refPDDisk" onclick="rSavePassport()" title="Сохранить">💾</button></div></div>
+ <div class="refPDTitle">Регистрация и контактные данные</div>
+ <div class="refPDRow"><div class="refPDLabel">Место рождения:</div><div id="rBirthPlace" class="refPDValue"></div><div></div></div>
+ <div class="refPDRow"><div class="refPDLabel">Гражданство:</div><div id="rCitizen" class="refPDValue">РОССИЯ</div><div></div></div>
+ <div class="refPDRow"><div class="refPDLabel">Социальный статус:</div><div id="rSocial" class="refPDValue"></div><div></div></div>
+ <div class="refPDRow"><div class="refPDLabel">Адрес регистрации:</div><div id="rReg" class="refPDValue"></div><div class="refPDActions"><button type="button" class="refPDEdit" onclick="rOpenAddress()">A✎</button></div></div>
+ <div class="refPDRow"><div class="refPDLabel">Адрес проживания:</div><div id="rLive" class="refPDValue"></div><div></div></div>
+ <div class="refPDRow"><div class="refPDLabel">Телефон пациента:</div><div id="rPhone" class="refPDValue"></div><div></div></div>
+ <div id="rAddrEditor" class="refPDEditor"><div class="refPDGrid">
+   <label>Регистрация:</label><input id="rRegEdit" class="refPDIssued">
+   <label>Проживание:</label><input id="rLiveEdit" class="refPDIssued">
+   <label>Телефон:</label><input id="rPhoneEdit" style="grid-column:2/4">
+ </div><div class="refPDSave"><small>Для сохранения нажмите зелёную дискету</small><button type="button" class="refPDDisk" onclick="rSaveAddress()">💾</button></div></div>
+</div>
+</div><div id="arrival" class="pane"><div class="meta">Вид оплаты: ОМС &nbsp;&nbsp;&nbsp; № документа: 7757240878001728 &nbsp;&nbsp;&nbsp; Рег.№: 442248-2026 &nbsp;&nbsp;&nbsp; Дата: 02.10.2026 07:29<br>ЕРЗЛ <span id="aErzl">○</span><br>ЕРП <span class="checkmark">●</span></div><div class="age">69 лет &nbsp; Дата рождения: 21.02.1957</div><div class="arrivalGrid"><label>Регион по ДЗМ-1400:</label><input class="f" value="г. Москва"><button class="ellipsis">…</button><label>* Канал обращения:</label><select id="channel" class="f" onchange="applyChannelFields(this.value)"><option>103</option><option>103 поликлиника</option><option>самотёк</option></select><button class="ellipsis">▾</button><label>Кем доставлен:</label><input id="deliveredBy" class="f" value="скорой помощью"><button class="ellipsis">…</button><label>Номер подстанции СМП:</label><input id="smpStation" class="f" value="66"><span></span><label>Госпитализирован в текущем году:</label><input class="f" value="Повторно"><button class="ellipsis">…</button><label>Тип госпитализации:</label><input class="f" value="Госпитализация по экстренным показаниям"><button class="ellipsis">…</button><label>ЦКГ:</label><input id="ckg" class="f" readonly><span></span><label>Доставлен в стационар от начала заболевания:</label><select class="f"><option></option><option>в первые 6 часов</option><option>7–24 часа</option><option>позднее 24 часов</option></select><button class="ellipsis">…</button><label>* Кем направлен:</label><input id="referredBy" class="f" value="Скорая помощь"><button class="ellipsis">…</button><label>Учреждение:</label><input id="refInstitution" class="f" value="СС и НМП им. А.С. Пучкова / СС и НМП им. А.С. Пучкова"><button class="ellipsis">…</button><label>Диагноз направившего:</label><input id="icdDiagnosis" class="f" readonly placeholder="выберите код МКБ"><button class="ellipsis" onclick="openICD()">…</button><label>Развернутый диагноз:</label><textarea class="f area"></textarea><span></span><label>Дата направления/наряда:</label><input class="f" value="02.10.2026"><button class="ellipsis">▾</button><label>Переведен из МО:</label><input class="f"><button class="ellipsis">…</button><label>Согласован перевод из другой МО:</label><input class="f"><button class="ellipsis">…</button><label>Вид травмы:</label><input class="f"><button class="ellipsis">…</button><label>Эпид №:</label><input class="f"><span></span><label>Вид транспортировки:</label><select class="f"><option>сидя</option><option>лежа</option><option>может идти</option></select><button class="ellipsis">▾</button><label>Дополнительные сведения о пациенте, имеющие значение для оказания МП:</label><textarea class="f area"></textarea><span></span><label>Педикулез:</label><select class="f"><option></option><option>нет</option><option>да</option></select><button class="ellipsis">▾</button><label>Чесотка:</label><select class="f"><option></option><option>нет</option><option>да</option></select><button class="ellipsis">▾</button><label><b>Санобработка</b><br>Проводилась:</label><select class="f"><option></option><option>нет</option><option>да</option></select><button class="ellipsis">▾</button></div><button class="save" onclick="saved(this)">Сохранить</button></div><div id="docs" class="pane"><div class="meta">Вид оплаты: ОМС &nbsp;&nbsp;&nbsp; № документа: 7757240878001728 &nbsp;&nbsp;&nbsp; Рег.№: 442248-2026 &nbsp;&nbsp;&nbsp; Дата: 02.10.2026 07:29<br>ЕРЗЛ <span id="dErzl">○</span><br>ЕРП <span class="checkmark">●</span></div><div class="age">69 лет &nbsp; Дата рождения: 21.02.1957</div><div id="scanState" class="scanState">Для добавления скана выполните сверку с ЕРЗЛ.</div><div class="docArea"><div id="docListArea"><table class="docs"><thead><tr><th style="width:85px"></th><th>Группа документов</th><th>Документ</th><th>Дата и время</th></tr></thead><tbody id="docsBody"></tbody></table><div id="docEmpty" class="docEmpty">&lt;нет данных&gt;</div></div><div id="preview" class="preview">Область предварительного просмотра</div></div><div class="docBtns"><button id="addDocBtn" onclick="addTrainingScan()" disabled>Добавить документ</button><button onclick="saved(this)">Сохранить</button></div></div></div>
 </div></div></main></div></section>
 <div id="pdoModal" class="modal"><div class="modalBox pdoBox"><div class="modalTitle">Специализация ПДО</div><div class="modalContent"><input id="pdoQ" class="pdoSearch" oninput="renderPDO()"><div id="pdoList" class="pdoList"></div></div></div></div>
 <div id="icdModal" class="modal"><div class="modalBox icdBox"><div class="modalTitle">Справочник МКБ-10 — учебный</div><div class="modalContent"><input id="icdQ" class="pdoSearch" placeholder="Поиск по коду или наименованию" oninput="renderICD()"><table class="icdTable"><thead><tr><th style="width:120px">Код</th><th>Наименование</th></tr></thead><tbody id="icdList"></tbody></table></div></div></div><div id="examDocsOverlay" class="examOverlay"><div class="examModal"><div class="examModalHead"><span>Документы пациента — учебный комплект</span><span class="examClose" onclick="hideExamDocuments()">×</span></div><div id="examDocsBody" class="examModalBody"></div></div></div><div id="examResultOverlay" class="examOverlay"><div class="examModal"><div class="examModalHead"><span>Итоговый протокол экзамена</span><span class="examClose" onclick="closeExamResult()">×</span></div><div id="examResultBody" class="examModalBody"></div></div></div><div class="noticeTrain">УЧЕБНЫЙ ТРЕНАЖЁР — НЕ ЕМИАС • Все данные вымышлены</div><script>
@@ -1085,4 +1125,84 @@ document.addEventListener("click",function(e){
 })();
 
 </script>
-</body></html>
+<script>
+/* === ERZL attachment + reference Personal Data === */
+(function(){
+ const V=id=>(document.getElementById(id)?.value||'').trim();
+ const T=id=>(document.getElementById(id)?.textContent||'').trim();
+ function fio(){return [V('surname'),V('name'),V('patronymic')].filter(Boolean).join(' ')}
+ function rec(){try{return (window.TRAINING_ERZL||{})[fio()]||null}catch(e){return null}}
+ function verified(){
+   const s=T('erzRightStatus')||T('erzStatus');
+   return s.includes('Сверен с ЕРЗЛ')&&!s.includes('Не сверен');
+ }
+ function passportParts(s){
+   s=(s||'').trim().replace(/\\s+/g,' ');
+   let m=s.match(/^(\\d{2}\\s?\\d{2})\\s+(.+)$/);
+   return m?{series:m[1],number:m[2]}:{series:'',number:s};
+ }
+ function syncAttach(){
+   const a=document.getElementById('attachments'),r=rec();
+   if(!a)return;
+   if(verified()&&r&&r.verified){
+     a.textContent=r.attachment||r.attachments||
+       'ГБУЗ г. Москвы, прикрепление по ОМС; медицинская организация по месту регистрации';
+   }else if((T('erzRightStatus')||T('erzStatus')).trim()) a.textContent='';
+ }
+ window.syncRefPD=function(){
+   const r=rec();
+   document.getElementById('rFio').textContent=fio();
+   document.getElementById('rDob').textContent=V('dob')?'Дата рождения: '+V('dob'):'';
+   document.getElementById('rPolicy').textContent=V('policy')?'Полис ОМС № '+V('policy'):'';
+   document.getElementById('rPolicyMeta').textContent='№ документа: '+(V('policy')||'—');
+   document.getElementById('rErzl').textContent='ЕРЗЛ: '+(verified()?'сверен':'не сверен');
+   if(r&&r.verified){
+     const p=passportParts(r.passport||'');
+     document.getElementById('rSeries').value=p.series;
+     document.getElementById('rNumber').value=p.number;
+     document.getElementById('rIssueDate').value=r.passportDate||r.issueDate||'';
+     document.getElementById('rIssued').value=r.passportIssued||r.issuedBy||'';
+     document.getElementById('rPassport').textContent=[
+       'Паспорт РФ',p.series&&'серия '+p.series,p.number&&'№ '+p.number,
+       (r.passportDate||r.issueDate)&&'выдан '+(r.passportDate||r.issueDate),
+       r.passportIssued||r.issuedBy
+     ].filter(Boolean).join(', ');
+     const reg=r.registration||r.address||'';
+     document.getElementById('rReg').textContent=reg;
+     document.getElementById('rLive').textContent=r.livingAddress||r.residence||reg;
+     document.getElementById('rPhone').textContent=r.phone||'';
+     document.getElementById('rBirthPlace').textContent=r.birthPlace||'';
+     document.getElementById('rCitizen').textContent=r.citizenship||'РОССИЯ';
+     document.getElementById('rSocial').textContent=r.socialStatus||'';
+   }
+ };
+ window.rOpenPassport=()=>document.getElementById('rPassEditor').classList.add('open');
+ window.rSavePassport=function(){
+   const s=V('rSeries'),n=V('rNumber'),d=V('rIssueDate'),i=V('rIssued');
+   document.getElementById('rPassport').textContent=['Паспорт РФ',s&&'серия '+s,n&&'№ '+n,d&&'выдан '+d,i].filter(Boolean).join(', ');
+   document.getElementById('rPassEditor').classList.remove('open');
+   window._savedPassport={series:s,number:n,issueDate:d,issuedBy:i};
+ };
+ window.rOpenAddress=function(){
+   document.getElementById('rRegEdit').value=T('rReg');
+   document.getElementById('rLiveEdit').value=T('rLive');
+   document.getElementById('rPhoneEdit').value=T('rPhone');
+   document.getElementById('rAddrEditor').classList.add('open');
+ };
+ window.rSaveAddress=function(){
+   document.getElementById('rReg').textContent=V('rRegEdit');
+   document.getElementById('rLive').textContent=V('rLiveEdit');
+   document.getElementById('rPhone').textContent=V('rPhoneEdit');
+   document.getElementById('rAddrEditor').classList.remove('open');
+ };
+ document.addEventListener('click',e=>{
+   const b=e.target.closest('button'); if(!b)return;
+   if((b.textContent||'').toUpperCase().includes('ПОИСК')){
+     setTimeout(()=>{syncAttach();window.syncRefPD()},100);
+     setTimeout(()=>{syncAttach();window.syncRefPD()},250);
+   }
+   if((b.textContent||'').includes('Персональные данные')||b.id==='regBtn')
+     setTimeout(window.syncRefPD,30);
+ });
+})();
+</script></body></html>
