@@ -960,4 +960,129 @@ document.addEventListener("click",function(e){
 })();
 
 </script>
+<script>
+
+/* === DEFINITIVE ERZL -> REGISTRATION -> PERSONAL DATA FIX === */
+(function(){
+  let erzlSearchCompleted = false;
+  let verifiedRecord = null;
+
+  function fio(){
+    const v=id => (document.getElementById(id)?.value||"").trim();
+    return [v("surname"),v("name"),v("patronymic")].filter(Boolean).join(" ").replace(/\s+/g," ").trim();
+  }
+
+  function findLabelControl(labelText){
+    const pane=document.getElementById("personal");
+    if(!pane)return null;
+    const labels=[...pane.querySelectorAll("label")];
+    const lab=labels.find(x=>(x.textContent||"").replace("*","").trim().startsWith(labelText));
+    if(!lab)return null;
+    const next=lab.nextElementSibling;
+    if(!next)return null;
+    if(next.matches("input,select,textarea"))return next;
+    return next.querySelector("input,select,textarea");
+  }
+
+  function setControl(label,value){
+    const el=findLabelControl(label);
+    if(!el)return;
+    if(el.tagName==="SELECT"){
+      let opt=[...el.options].find(o=>o.value===value || o.text===value);
+      if(!opt && value){
+        opt=new Option(value,value);
+        el.add(opt);
+      }
+      el.value=value||"";
+    } else el.value=value||"";
+  }
+
+  function fillPersonal(rec){
+    if(!rec || !rec.verified)return;
+    setControl("Документ удост. личность","Паспорт гражданина РФ");
+    setControl("Документ основной",rec.passport);
+    setControl("Гражданство","Российская Федерация");
+    setControl("Адрес регистрации",rec.registration);
+    setControl("Адрес проживания",rec.registration);
+    setControl("Телефон пациента",rec.phone);
+    const meta=document.getElementById("metaDoc");
+    if(meta)meta.textContent=(document.getElementById("policy")?.value||"");
+    const pd=document.getElementById("pDob");
+    if(pd)pd.textContent=(document.getElementById("dob")?.value||"");
+    const pe=document.getElementById("pErzl");
+    if(pe)pe.textContent="●";
+  }
+
+  function activateRegistration(){
+    const b=document.getElementById("regBtn");
+    if(!b)return;
+    b.disabled=!erzlSearchCompleted;
+    b.classList.toggle("enabled",erzlSearchCompleted);
+    b.style.pointerEvents=erzlSearchCompleted?"auto":"none";
+    b.style.opacity=erzlSearchCompleted?"1":".72";
+  }
+
+  // SEARCH: wait until the site's own ERZL logic has finished, then establish one
+  // authoritative state for the Registration button and the second tab.
+  document.addEventListener("click",function(e){
+    const b=e.target.closest("button");
+    if(!b || !(b.textContent||"").toUpperCase().includes("ПОИСК"))return;
+    setTimeout(function(){
+      const status=(document.getElementById("erzRightStatus")?.textContent||"").trim();
+      if(!status || status.startsWith("Дата рождения:")){
+        erzlSearchCompleted=false;
+        verifiedRecord=null;
+      } else {
+        erzlSearchCompleted=true;
+        const rec=(window.TRAINING_ERZL||TRAINING_ERZL||{})[fio()]||null;
+        verifiedRecord=status.includes("Сверен с ЕРЗЛ") && !status.includes("Не сверен") ? rec : null;
+        if(verifiedRecord) fillPersonal(verifiedRecord);
+      }
+      activateRegistration();
+    },50);
+  },false);
+
+  // Registration must always be clickable after a completed ERZL result.
+  // On click open the second tab ("Персональные данные") and populate ERZL data.
+  document.addEventListener("click",function(e){
+    const b=e.target.closest("#regBtn");
+    if(!b)return;
+    if(!erzlSearchCompleted){
+      e.preventDefault(); e.stopImmediatePropagation(); return;
+    }
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    window.registered=true;
+    if(verifiedRecord)fillPersonal(verifiedRecord);
+
+    const card=document.getElementById("card");
+    if(card)card.classList.remove("postRegistration");
+    const tabs=[...document.querySelectorAll("#card .tabs button")];
+    if(tabs[1]){
+      tabs[1].click();
+      if(verifiedRecord)setTimeout(()=>fillPersonal(verifiedRecord),0);
+    }
+  },true);
+
+  // Preserve the data if the user later returns to Personal data manually.
+  document.addEventListener("click",function(e){
+    const b=e.target.closest("#card .tabs button");
+    if(b && (b.textContent||"").includes("Персональные данные") && verifiedRecord){
+      setTimeout(()=>fillPersonal(verifiedRecord),0);
+    }
+  });
+
+  // New patient/card => a new ERZL check is required.
+  document.addEventListener("click",function(e){
+    const b=e.target.closest("button");
+    if(!b)return;
+    const tx=(b.textContent||"").trim();
+    if(tx==="+" || tx==="＋"){
+      erzlSearchCompleted=false; verifiedRecord=null;
+      setTimeout(activateRegistration,0);
+    }
+  });
+})();
+
+</script>
 </body></html>
