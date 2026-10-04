@@ -772,4 +772,53 @@ document.addEventListener("click",function(e){
   }
 })();
 
-</script></body></html>
+</script><script>
+
+/* === REGISTRATION BUTTON DEFINITIVE FIX === */
+(function(){
+  function registrationSearchCompleted(){
+    const right = document.getElementById('erzRightStatus');
+    const legacy = document.getElementById('erzStatus');
+    const txt = ((right && right.textContent) || (legacy && legacy.textContent) || '').trim();
+    return txt.includes('Сверен с ЕРЗЛ') ||
+           txt.includes('Не сверен с ЕРЗЛ') ||
+           txt.includes('Пациент в ЕРЗЛ не найден') ||
+           txt.includes('Обнаружено расхождение');
+  }
+
+  window.updateRegister = function(){
+    const b = document.getElementById('regBtn');
+    if(!b) return;
+    const enabled = registrationSearchCompleted();
+    b.disabled = !enabled;
+    b.classList.toggle('enabled', enabled);
+    b.style.pointerEvents = enabled ? 'auto' : 'none';
+    b.style.opacity = enabled ? '1' : '.72';
+  };
+
+  // После любого завершённого поиска повторно синхронизируем кнопку.
+  document.addEventListener('click', function(e){
+    const btn = e.target.closest('button');
+    if(!btn) return;
+    const label = (btn.textContent || '').trim().toUpperCase();
+    if(label.includes('ПОИСК')){
+      setTimeout(window.updateRegister, 0);
+      setTimeout(window.updateRegister, 50);
+    }
+  }, true);
+
+  // Наблюдаем за изменением статуса ЕРЗЛ.
+  document.addEventListener('DOMContentLoaded', function(){
+    ['erzRightStatus','erzStatus'].forEach(function(id){
+      const el = document.getElementById(id);
+      if(el){
+        new MutationObserver(window.updateRegister)
+          .observe(el,{childList:true,subtree:true,characterData:true});
+      }
+    });
+    window.updateRegister();
+  });
+})();
+
+</script>
+</body></html>
