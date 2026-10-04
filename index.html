@@ -203,6 +203,49 @@
 .refPDGrid label{text-align:right}.refPDGrid input,.refPDGrid select{height:28px;border:1px solid #a8b9be;background:#fff;padding:3px 6px;min-width:0}
 .refPDIssued{grid-column:2/7}.refPDSave{display:flex;justify-content:flex-end;align-items:center;margin-top:8px}.refPDSave small{margin-right:8px}
 .refPDDisk{width:34px;height:28px;border:1px solid #5c9d27;background:#76bd20;color:#fff;cursor:pointer;font-size:16px}
+
+/* === ВКЛАДКА «ПЕРСОНАЛЬНЫЕ ДАННЫЕ»: компоновка по референсу === */
+.pdRef{padding:18px 18px 82px;background:#fff;color:#60747a;font:13px Arial,sans-serif}
+.pdHead{display:flex;justify-content:space-between;align-items:flex-end;padding:0 6px 10px;border-bottom:1px solid #d5dddf;margin-bottom:0}
+.pdHeadLeft{display:flex;gap:12px;align-items:flex-end}.pdAge{font-size:12px}.pdDob{font-size:12px}
+.pdHeadRight{display:flex;gap:28px;align-items:flex-start;font-size:11px;text-align:left}
+.pdErzl{line-height:15px;text-align:right}.pdGreen{color:#69b52c;font-weight:bold}
+.pdSection{border-bottom:1px solid #d9e0e2;padding:10px 0}
+.pdLine{display:grid;grid-template-columns:165px minmax(260px,1fr) 92px;align-items:center;min-height:35px}
+.pdLine.two{grid-template-columns:165px 310px 145px minmax(260px,1fr) 20px}
+.pdLabel{text-align:right;padding-right:12px;white-space:nowrap}
+.pdField{height:28px;border:1px solid #aebdc1;background:#fff;padding:5px 8px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;color:#52686e}
+.pdSelect:after{content:"▾";float:right;color:#6d7e83}
+.pdRadios{display:flex;gap:8px;align-items:center;margin-left:8px}.pdCircle{width:19px;height:19px;border:1px solid #92a5aa;border-radius:50%;display:inline-block}
+.pdActions{display:flex;gap:5px;align-items:center;padding-left:7px}.pdIcon{border:0;background:transparent;padding:2px;color:#4c8994;font-size:17px;cursor:pointer}
+.pdAdd{color:#61ad49}.pdDel{color:#b84e62}.pdEdit{color:#4c8994;font-weight:bold}
+.pdAddressActions{display:flex;gap:2px}.pdSquare{width:25px;height:25px;border:1px solid #b7c4c7;background:#eef4f5;color:#4d8791;cursor:pointer}
+.pdBottom{display:grid;grid-template-columns:165px 310px 145px minmax(260px,1fr) 20px;align-items:center;min-height:44px}
+.pdSaveWrap{display:flex;justify-content:flex-end;margin-top:48px}.pdSaveMain{width:138px;height:38px;border:0;background:#83c82f;color:#fff;font-size:15px;cursor:pointer}
+.pdEditor{display:none;margin:3px 92px 7px 165px;padding:9px 10px;background:#f6f9fa;border:1px solid #d4dfe1}
+.pdEditor.open{display:block}.pdEditGrid{display:grid;grid-template-columns:105px 130px 85px 180px 100px 160px;gap:6px;align-items:center}
+.pdEditGrid label{text-align:right}.pdEditGrid input,.pdEditGrid select{height:27px;border:1px solid #aebdc1;padding:3px 6px;background:#fff;min-width:0}
+.pdWide{grid-column:2/7}.pdEditorSave{display:flex;justify-content:flex-end;margin-top:8px}.pdDisk{width:34px;height:28px;border:1px solid #559e25;background:#78bf29;color:#fff;cursor:pointer;font-size:16px}
+
+/* === STRICT REFERENCE: PERSONAL DATA PAGE === */
+#personal{background:#fff!important}
+.pdRef{padding:0 14px 72px!important;background:#fff!important;color:#60757b!important;font:13px Arial,sans-serif!important}
+.pdHead{height:86px!important;display:flex!important;justify-content:space-between!important;align-items:flex-end!important;padding:0 8px 9px!important;border-bottom:1px solid #d7dfe1!important;margin:0!important}
+.pdHeadLeft{display:flex!important;gap:12px!important;align-items:flex-end!important}
+.pdHeadRight{display:flex!important;gap:26px!important;align-items:flex-start!important;font-size:11px!important}
+.pdSection{padding:8px 0!important;border-bottom:1px solid #d7dfe1!important}
+.pdLine{display:grid!important;grid-template-columns:165px minmax(420px,1fr) 100px!important;align-items:center!important;min-height:35px!important}
+.pdLine.two{grid-template-columns:165px 310px 145px minmax(300px,1fr) 22px!important}
+.pdLabel{text-align:right!important;padding-right:12px!important;white-space:nowrap!important}
+.pdField{height:28px!important;border:1px solid #aebdc1!important;background:#fff!important;padding:5px 8px!important;border-radius:0!important;box-shadow:none!important}
+.pdActions{display:flex!important;gap:2px!important;padding-left:5px!important}
+.pdIcon{border:0!important;background:transparent!important;box-shadow:none!important;padding:2px 3px!important}
+.pdAddressActions{display:flex!important;gap:1px!important}
+.pdSquare{width:25px!important;height:25px!important;border:1px solid #b7c4c7!important;border-radius:0!important;background:#eef4f5!important}
+.pdBottom{display:grid!important;grid-template-columns:165px 310px 145px minmax(300px,1fr) 22px!important;align-items:center!important;min-height:46px!important}
+.pdSaveWrap{display:flex!important;justify-content:flex-end!important;margin-top:44px!important;padding-right:0!important}
+.pdSaveMain{width:138px!important;height:38px!important;border:0!important;border-radius:0!important;background:#83c82f!important;color:#fff!important;font-size:15px!important}
+.pdEditor{margin:4px 100px 7px 165px!important;border:1px solid #d4dfe1!important;background:#f8fafb!important}
 </style></head><body>
 
 <div id="modeScreen" style="display:none;position:fixed;inset:0;background:#f7f7f7;z-index:99999;align-items:center;justify-content:center;font-family:Arial,sans-serif">
@@ -351,7 +394,7 @@
 <div class="refHint">Варианты поиска в ЕРЗЛ: “Фамилия+Имя+Дата рождения+Пол” или “№ Полиса” или “СНИЛС” <span id="erzStatus"></span></div>
 
 <div class="wideRows">
-<div class="wideRow"><label>Прикрепления:</label><textarea id="attachment" class="f" style="height:46px" readonly></textarea></div>
+<div class="wideRow"><label>Прикрепления:</label><textarea id="attachment" class="f" style="height:58px;line-height:18px;resize:none" readonly></textarea></div>
 <div class="wideRow"><label>Доп. информация:</label><input id="extra" class="f" readonly></div>
 <div class="wideRow"><label>Зарегистрировал:</label><input id="registrar" class="f" readonly></div>
 </div>
@@ -361,7 +404,7 @@
 <input id="severity" value="удовлетворительно"><input id="pdo">
 </div>
 <button id="regBtn" class="registerBottom" onclick="registerPatient()" disabled>Регистрация</button><div id="postRegBlock" class="postRegBlock">
-<div class="postRegRow"><label>Прикрепления:</label><textarea>Стоматологический, ГАУЗ "СП № 65 ДЗМ", код МО 3546, код ММО 0307065, дата 01.12.2016; Терапевтический, "ГБУ ГП №180 ДЗМ", код МО 4351, код ММО 0305180, дата 24.11.2014</textarea></div>
+<div class="postRegRow"><label>Прикрепления:</label><textarea id="postAttachment" readonly></textarea></div>
 <div class="postRegRow postRegRequired"><label>* Причина обращения:</label><select><option>внезапное заболевание</option><option>травма</option><option>обострение хронического заболевания</option></select></div>
 <div class="postRegRow postRegRequired"><label>* Дата обращения:</label><input value="02.10.2026 14:04"></div>
 <div class="postRegRow"><label>Степень тяжести:</label><select><option>удовлетворительное</option><option>средней тяжести</option><option>тяжёлое</option></select></div>
@@ -373,30 +416,94 @@
 <button class="postRegSave" onclick="finishRegistration()">Сохранить</button><div style="clear:both"></div>
 </div></div>
 </div><div id="personal" class="pane">
-<div class="refPD">
- <div class="refPDTop"><div><div id="rFio" class="refPDFio"></div><div id="rDob"></div></div><div class="refPDMeta">Вид оплаты: ОМС<br><span id="rPolicyMeta">№ документа: —</span><br><span id="rErzl">ЕРЗЛ: —</span></div></div>
- <div class="refPDRow"><div class="refPDLabel">Вид оплаты:</div><div class="refPDValue">ОМС</div><div></div></div>
- <div class="refPDRow"><div class="refPDLabel">Документ основной:</div><div id="rPolicy" class="refPDValue"></div><div></div></div>
- <div class="refPDTitle">Документ, удостоверяющий личность</div>
- <div class="refPDRow"><div class="refPDLabel">Документ удост. личности:</div><div id="rPassport" class="refPDValue"></div><div class="refPDActions"><button type="button" class="refPDEdit" onclick="rOpenPassport()" title="Редактировать">A✎</button></div></div>
- <div id="rPassEditor" class="refPDEditor"><div class="refPDGrid">
-   <label>Тип документа:</label><select id="rDocType"><option>Паспорт гражданина Российской Федерации</option></select>
-   <label>Серия:</label><input id="rSeries"><label>Номер:</label><input id="rNumber">
-   <label>Дата выдачи:</label><input id="rIssueDate" placeholder="ДД.ММ.ГГГГ">
-   <label>Кем выдан:</label><input id="rIssued" class="refPDIssued">
- </div><div class="refPDSave"><small>Для сохранения нажмите зелёную дискету</small><button type="button" class="refPDDisk" onclick="rSavePassport()" title="Сохранить">💾</button></div></div>
- <div class="refPDTitle">Регистрация и контактные данные</div>
- <div class="refPDRow"><div class="refPDLabel">Место рождения:</div><div id="rBirthPlace" class="refPDValue"></div><div></div></div>
- <div class="refPDRow"><div class="refPDLabel">Гражданство:</div><div id="rCitizen" class="refPDValue">РОССИЯ</div><div></div></div>
- <div class="refPDRow"><div class="refPDLabel">Социальный статус:</div><div id="rSocial" class="refPDValue"></div><div></div></div>
- <div class="refPDRow"><div class="refPDLabel">Адрес регистрации:</div><div id="rReg" class="refPDValue"></div><div class="refPDActions"><button type="button" class="refPDEdit" onclick="rOpenAddress()">A✎</button></div></div>
- <div class="refPDRow"><div class="refPDLabel">Адрес проживания:</div><div id="rLive" class="refPDValue"></div><div></div></div>
- <div class="refPDRow"><div class="refPDLabel">Телефон пациента:</div><div id="rPhone" class="refPDValue"></div><div></div></div>
- <div id="rAddrEditor" class="refPDEditor"><div class="refPDGrid">
-   <label>Регистрация:</label><input id="rRegEdit" class="refPDIssued">
-   <label>Проживание:</label><input id="rLiveEdit" class="refPDIssued">
-   <label>Телефон:</label><input id="rPhoneEdit" style="grid-column:2/4">
- </div><div class="refPDSave"><small>Для сохранения нажмите зелёную дискету</small><button type="button" class="refPDDisk" onclick="rSaveAddress()">💾</button></div></div>
+<div class="pdRef">
+  <div class="pdHead">
+    <div class="pdHeadLeft"><span id="pdAge" class="pdAge"></span><span id="pdDob" class="pdDob"></span></div>
+    <div class="pdHeadRight">
+      <span>Вид оплаты: <b>ОМС</b></span>
+      <span id="pdPolicyMeta">№ документа: —</span>
+      <span id="pdRegMeta">Рег. № —</span>
+      <span id="pdDateMeta">Дата: —</span>
+      <span class="pdErzl">ЕРЗЛ <span class="pdGreen">●</span><br>ЕГРП <span class="pdGreen">●</span></span>
+    </div>
+  </div>
+
+  <div class="pdSection">
+    <div class="pdLine two">
+      <div class="pdLabel">Вид оплаты:</div><div class="pdField pdSelect">ОМС</div>
+      <div style="display:flex;align-items:center;justify-content:flex-end">Без документа:</div>
+      <div class="pdRadios"><span class="pdCircle"></span><span>ВМП:</span><span class="pdCircle"></span></div><div></div>
+    </div>
+    <div class="pdLine">
+      <div class="pdLabel">Документ основание:</div><div id="pdPolicy" class="pdField pdSelect"></div>
+      <div class="pdActions"><button class="pdIcon" title="Копировать">♧</button><button class="pdIcon pdEdit" title="Редактировать">A✎</button><button class="pdIcon pdAdd" title="Добавить">✚</button><button class="pdIcon pdDel" title="Удалить">✖</button></div>
+    </div>
+  </div>
+
+  <div class="pdSection">
+    <div class="pdLine">
+      <div class="pdLabel">Документ удост. личности:</div><div id="pdPassport" class="pdField pdSelect"></div>
+      <div class="pdActions"><button class="pdIcon pdEdit" onclick="pdOpenPassport()" title="Редактировать">A✎</button><button class="pdIcon pdAdd" title="Добавить">✚</button><button class="pdIcon pdDel" title="Удалить">✖</button></div>
+    </div>
+    <div id="pdPassEditor" class="pdEditor">
+      <div class="pdEditGrid">
+        <label>Тип документа:</label><select id="pdDocType"><option>Паспорт гражданина Российской Федерации</option></select>
+        <label>Серия:</label><input id="pdSeries"><label>Номер:</label><input id="pdNumber">
+        <label>Дата выдачи:</label><input id="pdIssueDate" placeholder="ДД.ММ.ГГГГ">
+        <label>Кем выдан:</label><input id="pdIssued" class="pdWide">
+      </div>
+      <div class="pdEditorSave"><button class="pdDisk" onclick="pdSavePassport()" title="Сохранить">💾</button></div>
+    </div>
+  </div>
+
+  <div class="pdSection">
+    <div class="pdLine two">
+      <div class="pdLabel">Место рождения:</div><div id="pdBirthPlace" class="pdField"></div>
+      <div class="pdLabel">*Гражданство:</div><div id="pdCitizen" class="pdField pdSelect">РОССИЯ</div><div></div>
+    </div>
+    <div class="pdLine">
+      <div class="pdLabel">Социальный статус:</div><div id="pdSocial" class="pdField pdSelect"></div><div></div>
+    </div>
+  </div>
+
+  <div class="pdSection">
+    <div class="pdLine">
+      <div class="pdLabel">Адрес регистрации:</div><div id="pdReg" class="pdField"></div>
+      <div class="pdAddressActions"><button class="pdSquare" onclick="pdOpenAddress()">A✎</button><button class="pdSquare">◆</button><button class="pdSquare pdDel">✖</button></div>
+    </div>
+  </div>
+
+  <div class="pdSection">
+    <div class="pdLine">
+      <div class="pdLabel">Адрес проживания:</div><div id="pdLive" class="pdField"></div>
+      <div class="pdAddressActions"><button class="pdSquare" onclick="pdOpenAddress()">A✎</button><button class="pdSquare pdDel">✖</button></div>
+    </div>
+    <div id="pdAddrEditor" class="pdEditor">
+      <div class="pdEditGrid">
+        <label>Регистрация:</label><input id="pdRegEdit" class="pdWide">
+        <label>Проживание:</label><input id="pdLiveEdit" class="pdWide">
+        <label>Телефон:</label><input id="pdPhoneEdit" style="grid-column:2/4">
+      </div>
+      <div class="pdEditorSave"><button class="pdDisk" onclick="pdSaveAddress()" title="Сохранить">💾</button></div>
+    </div>
+  </div>
+
+  <div class="pdSection">
+    <div class="pdLine two">
+      <div class="pdLabel">Телефон пациента:</div><div id="pdPhone" class="pdField"></div>
+      <div class="pdLabel">Контактная информация:</div><div id="pdContactInfo" class="pdField"></div><div></div>
+    </div>
+    <div class="pdLine">
+      <div class="pdLabel">Контактное лицо:</div><div id="pdContact" class="pdField pdSelect"></div>
+      <div class="pdActions"><button class="pdIcon pdEdit">A✎</button><button class="pdIcon pdAdd">✚</button><button class="pdIcon pdDel">✖</button></div>
+    </div>
+  </div>
+
+  <div class="pdBottom">
+    <div class="pdLabel">Местность:</div><div id="pdLocality" class="pdField pdSelect"></div>
+    <div class="pdLabel">Региональная принадл.:</div><div id="pdRegion" class="pdField"></div><div></div>
+  </div>
+  <div class="pdSaveWrap"><button class="pdSaveMain" type="button">Сохранить</button></div>
 </div>
 </div><div id="arrival" class="pane"><div class="meta">Вид оплаты: ОМС &nbsp;&nbsp;&nbsp; № документа: 7757240878001728 &nbsp;&nbsp;&nbsp; Рег.№: 442248-2026 &nbsp;&nbsp;&nbsp; Дата: 02.10.2026 07:29<br>ЕРЗЛ <span id="aErzl">○</span><br>ЕРП <span class="checkmark">●</span></div><div class="age">69 лет &nbsp; Дата рождения: 21.02.1957</div><div class="arrivalGrid"><label>Регион по ДЗМ-1400:</label><input class="f" value="г. Москва"><button class="ellipsis">…</button><label>* Канал обращения:</label><select id="channel" class="f" onchange="applyChannelFields(this.value)"><option>103</option><option>103 поликлиника</option><option>самотёк</option></select><button class="ellipsis">▾</button><label>Кем доставлен:</label><input id="deliveredBy" class="f" value="скорой помощью"><button class="ellipsis">…</button><label>Номер подстанции СМП:</label><input id="smpStation" class="f" value="66"><span></span><label>Госпитализирован в текущем году:</label><input class="f" value="Повторно"><button class="ellipsis">…</button><label>Тип госпитализации:</label><input class="f" value="Госпитализация по экстренным показаниям"><button class="ellipsis">…</button><label>ЦКГ:</label><input id="ckg" class="f" readonly><span></span><label>Доставлен в стационар от начала заболевания:</label><select class="f"><option></option><option>в первые 6 часов</option><option>7–24 часа</option><option>позднее 24 часов</option></select><button class="ellipsis">…</button><label>* Кем направлен:</label><input id="referredBy" class="f" value="Скорая помощь"><button class="ellipsis">…</button><label>Учреждение:</label><input id="refInstitution" class="f" value="СС и НМП им. А.С. Пучкова / СС и НМП им. А.С. Пучкова"><button class="ellipsis">…</button><label>Диагноз направившего:</label><input id="icdDiagnosis" class="f" readonly placeholder="выберите код МКБ"><button class="ellipsis" onclick="openICD()">…</button><label>Развернутый диагноз:</label><textarea class="f area"></textarea><span></span><label>Дата направления/наряда:</label><input class="f" value="02.10.2026"><button class="ellipsis">▾</button><label>Переведен из МО:</label><input class="f"><button class="ellipsis">…</button><label>Согласован перевод из другой МО:</label><input class="f"><button class="ellipsis">…</button><label>Вид травмы:</label><input class="f"><button class="ellipsis">…</button><label>Эпид №:</label><input class="f"><span></span><label>Вид транспортировки:</label><select class="f"><option>сидя</option><option>лежа</option><option>может идти</option></select><button class="ellipsis">▾</button><label>Дополнительные сведения о пациенте, имеющие значение для оказания МП:</label><textarea class="f area"></textarea><span></span><label>Педикулез:</label><select class="f"><option></option><option>нет</option><option>да</option></select><button class="ellipsis">▾</button><label>Чесотка:</label><select class="f"><option></option><option>нет</option><option>да</option></select><button class="ellipsis">▾</button><label><b>Санобработка</b><br>Проводилась:</label><select class="f"><option></option><option>нет</option><option>да</option></select><button class="ellipsis">▾</button></div><button class="save" onclick="saved(this)">Сохранить</button></div><div id="docs" class="pane"><div class="meta">Вид оплаты: ОМС &nbsp;&nbsp;&nbsp; № документа: 7757240878001728 &nbsp;&nbsp;&nbsp; Рег.№: 442248-2026 &nbsp;&nbsp;&nbsp; Дата: 02.10.2026 07:29<br>ЕРЗЛ <span id="dErzl">○</span><br>ЕРП <span class="checkmark">●</span></div><div class="age">69 лет &nbsp; Дата рождения: 21.02.1957</div><div id="scanState" class="scanState">Для добавления скана выполните сверку с ЕРЗЛ.</div><div class="docArea"><div id="docListArea"><table class="docs"><thead><tr><th style="width:85px"></th><th>Группа документов</th><th>Документ</th><th>Дата и время</th></tr></thead><tbody id="docsBody"></tbody></table><div id="docEmpty" class="docEmpty">&lt;нет данных&gt;</div></div><div id="preview" class="preview">Область предварительного просмотра</div></div><div class="docBtns"><button id="addDocBtn" onclick="addTrainingScan()" disabled>Добавить документ</button><button onclick="saved(this)">Сохранить</button></div></div></div>
 </div></div></main></div></section>
@@ -535,10 +642,14 @@ function searchERZL(){
   if(ok){
     document.getElementById('snils').value=rec.snils;
     document.getElementById('policy').value=rec.policy;
+    const attachText = rec.attachment || rec.attachments ||
+      'Стоматологический, ГАУЗ "СП № 65 ДЗМ", код МО 3546, код ММО 0307065, дата 01.12.2016; Терапевтический, "ГБУ ГП №180 ДЗМ", код МО 4351, код ММО 0305180, дата 24.11.2014';
+    document.getElementById('attachment').value = Array.isArray(attachText) ? attachText.join('; ') : attachText;
     setErzlStatus(true,'Сверен с ЕРЗЛ ✓');
   }else{
     document.getElementById('snils').value='';
     document.getElementById('policy').value='';
+    document.getElementById('attachment').value='';
     setErzlStatus(false,'Не сверен с ЕРЗЛ ❌');
   }
   updateRegister();
@@ -551,6 +662,8 @@ function registerPatient(){
    walkinEmpty.innerHTML='<div style="text-align:center"><b>Пациент зарегистрирован как самотёк</b><br>'+[surname.value,name.value,patronymic.value].join(' ').replace(/\s+/g,' ').trim()+'</div>';
  }
  const by=document.getElementById('postRegisteredBy'); if(by)by.value=(currentUser||'').toUpperCase();
+ const pa=document.getElementById('postAttachment');
+ if(pa) pa.value=(document.getElementById('attachment')?.value||'');
  document.getElementById('card').classList.add('postRegistration');
  document.querySelectorAll('.pane').forEach(x=>x.classList.remove('on'));
  document.getElementById('main').classList.add('on');
@@ -1142,7 +1255,7 @@ document.addEventListener("click",function(e){
    return m?{series:m[1],number:m[2]}:{series:'',number:s};
  }
  function syncAttach(){
-   const a=document.getElementById('attachments'),r=rec();
+   const a=document.getElementById('attachment'),r=rec();
    if(!a)return;
    if(verified()&&r&&r.verified){
      a.textContent=r.attachment||r.attachments||
@@ -1205,4 +1318,110 @@ document.addEventListener("click",function(e){
      setTimeout(window.syncRefPD,30);
  });
 })();
-</script></body></html>
+</script>
+<script>
+/* Первая вкладка — синхронизация прикрепления с результатом ЕРЗЛ */
+(function(){
+  document.addEventListener('click', function(e){
+    const b=e.target.closest('button');
+    if(!b) return;
+    if((b.textContent||'').toUpperCase().includes('ПОИСК')){
+      setTimeout(function(){
+        const status=(document.getElementById('erzRightStatus')?.textContent||'').trim();
+        const a=document.getElementById('attachment');
+        if(!a) return;
+        if(status.includes('Не сверен') || status.includes('Дата рождения:')) a.value='';
+      },120);
+    }
+  });
+})();
+</script>
+
+
+<script>
+/* Синхронизация второй страницы с выбранным пациентом и учебной ЕРЗЛ */
+(function(){
+ const V=id=>(document.getElementById(id)?.value||'').trim();
+ const T=id=>(document.getElementById(id)?.textContent||'').trim();
+ function fio(){return [V('surname'),V('name'),V('patronymic')].filter(Boolean).join(' ')}
+ function rec(){try{return (window.TRAINING_ERZL||{})[fio()]||null}catch(e){return null}}
+ function parts(s){s=(s||'').trim().replace(/\s+/g,' ');let m=s.match(/^(\d{2}\s?\d{2})\s+(.+)$/);return m?{series:m[1],number:m[2]}:{series:'',number:s}}
+ window.syncPDReference=function(){
+   const r=rec(), dob=V('dob'), pol=V('policy');
+   document.getElementById('pdDob').textContent=dob?'Дата рождения: '+dob:'';
+   document.getElementById('pdPolicyMeta').textContent='№ документа: '+(pol||'—');
+   document.getElementById('pdDateMeta').textContent='Дата: '+new Date().toLocaleDateString('ru-RU');
+   document.getElementById('pdPolicy').textContent=pol?('Полис ОМС № '+pol):'';
+   if(r&&r.verified){
+     const p=parts(r.passport||'');
+     document.getElementById('pdPassport').textContent=['Паспорт РФ',p.series&&'серия '+p.series,p.number&&'№ '+p.number,(r.issueDate||r.passportDate)&&'выдан '+(r.issueDate||r.passportDate),r.issuedBy||r.passportIssued].filter(Boolean).join(', ');
+     document.getElementById('pdSeries').value=p.series; document.getElementById('pdNumber').value=p.number;
+     document.getElementById('pdIssueDate').value=r.issueDate||r.passportDate||''; document.getElementById('pdIssued').value=r.issuedBy||r.passportIssued||'';
+     const reg=r.registration||r.address||'';
+     document.getElementById('pdReg').textContent=reg; document.getElementById('pdLive').textContent=r.livingAddress||r.residence||reg;
+     document.getElementById('pdPhone').textContent=r.phone||''; document.getElementById('pdBirthPlace').textContent=r.birthPlace||'';
+     document.getElementById('pdCitizen').textContent=r.citizenship||'РОССИЯ'; document.getElementById('pdSocial').textContent=r.socialStatus||'';
+     document.getElementById('pdRegion').textContent=r.region||'г. Москва'; document.getElementById('pdLocality').textContent=r.locality||'город';
+   }
+ };
+ window.pdOpenPassport=()=>document.getElementById('pdPassEditor').classList.add('open');
+ window.pdSavePassport=function(){
+   const s=V('pdSeries'),n=V('pdNumber'),d=V('pdIssueDate'),i=V('pdIssued');
+   document.getElementById('pdPassport').textContent=['Паспорт РФ',s&&'серия '+s,n&&'№ '+n,d&&'выдан '+d,i].filter(Boolean).join(', ');
+   document.getElementById('pdPassEditor').classList.remove('open');
+ };
+ window.pdOpenAddress=function(){
+   document.getElementById('pdRegEdit').value=T('pdReg'); document.getElementById('pdLiveEdit').value=T('pdLive'); document.getElementById('pdPhoneEdit').value=T('pdPhone');
+   document.getElementById('pdAddrEditor').classList.add('open');
+ };
+ window.pdSaveAddress=function(){
+   document.getElementById('pdReg').textContent=V('pdRegEdit'); document.getElementById('pdLive').textContent=V('pdLiveEdit'); document.getElementById('pdPhone').textContent=V('pdPhoneEdit');
+   document.getElementById('pdAddrEditor').classList.remove('open');
+ };
+ document.addEventListener('click',e=>{
+   const b=e.target.closest('button'); if(!b)return;
+   if((b.textContent||'').includes('Персональные данные') || b.id==='regBtn') setTimeout(window.syncPDReference,40);
+ });
+})();
+</script>
+
+
+<script>
+(function(){
+  function v(id){return (document.getElementById(id)?.value||'').trim()}
+  function txt(id,s){const e=document.getElementById(id);if(e)e.textContent=s||''}
+  function currentRec(){
+    const key=[v('surname'),v('name'),v('patronymic')].filter(Boolean).join(' ');
+    try{return (window.TRAINING_ERZL||{})[key]||null}catch(e){return null}
+  }
+  function age(d){
+    const m=(d||'').match(/^(\d{2})\.(\d{2})\.(\d{4})$/); if(!m)return '';
+    const b=new Date(+m[3],+m[2]-1,+m[1]), n=new Date(); let a=n.getFullYear()-b.getFullYear();
+    if(n<new Date(n.getFullYear(),b.getMonth(),b.getDate()))a--; return a+' лет';
+  }
+  window.syncPDReferenceStrict=function(){
+    const r=currentRec(), dob=v('dob'), policy=v('policy');
+    txt('pdAge',age(dob)); txt('pdDob',dob?'Дата рождения: '+dob:'');
+    txt('pdPolicyMeta','№ документа: '+(policy||'—'));
+    txt('pdPolicy',policy?('Полис ОМС № '+policy):'');
+    txt('pdDateMeta','Дата: '+new Date().toLocaleDateString('ru-RU'));
+    if(r&&r.verified){
+      txt('pdBirthPlace',r.birthPlace||'');
+      txt('pdCitizen',r.citizenship||'РОССИЯ');
+      txt('pdSocial',r.socialStatus||'');
+      txt('pdReg',r.registration||r.address||'');
+      txt('pdLive',r.livingAddress||r.residence||r.registration||r.address||'');
+      txt('pdPhone',r.phone||'');
+      txt('pdRegion',r.region||'');
+      txt('pdLocality',r.locality||'');
+    }
+  };
+  document.addEventListener('click',function(e){
+    const b=e.target.closest('button'); if(!b)return;
+    if((b.textContent||'').includes('Персональные данные')||b.id==='regBtn')
+      setTimeout(window.syncPDReferenceStrict,50);
+  });
+})();
+</script>
+
+</body></html>
