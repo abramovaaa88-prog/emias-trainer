@@ -131,6 +131,11 @@
   border-color:#9dcdb4;
   background:#f4fbf7;
 }
+
+/* FIX: registration action is always visible above the training notice */
+#main .registerBottom{position:fixed!important;right:28px!important;bottom:54px!important;z-index:120!important;width:155px!important;height:36px!important}
+.noticeTrain{right:12px!important;bottom:10px!important;z-index:50!important}
+#main{padding-bottom:105px!important}
 </style></head><body>
 <section id="loginScreen"><div class="loginWin"><div class="loginHead">☰ &nbsp; КИС ЕМИАС <span style="float:right">— &nbsp; ×</span></div><div class="loginBody"><div class="loginBrand"><div class="keys">⚿</div><div class="ver">Версия:<br>2.1.110.32030</div></div><div class="loginForm"><div class="lr"><label>Логин:</label><input id="login"></div><div class="lr"><label>Пароль:</label><input id="password" type="password"></div><select id="lang" class="lang"><option>RUS</option></select><div class="loginBtns"><button onclick="doLogin()">OK</button><button onclick="clearLogin()">Отмена</button></div></div></div></div></section>
 <section id="app" class="hidden"><div class="appTop">☰ КИС ЕМИАС [Приемное отделение] - [Поступающие]</div><div class="layout"><aside class="sidebar"><div class="logo">ЕМИАС</div><div id="menuWalkin" class="menuItem clickable" onclick="showWalkins()">Обратившиеся</div><div id="menuIncoming" class="menuItem active clickable" onclick="showIncoming()">Поступающие</div><div class="menuItem inactive">Назначения</div><div class="menuItem inactive">Лист ожидания госпитализации</div><div class="menuItem inactive">Выполненные планы</div><div class="menuItem inactive">Направления в стационар</div><div class="menuItem inactive">Все госпитализированные</div><div class="menuItem inactive">Выписанные</div><div class="menuItem inactive">Отказы</div><div class="menuItem inactive">Все пациенты</div><div class="menuItem inactive">Отчёты</div><div id="menuExam" class="menuItem clickable examMenu" onclick="startExam()">Экзамен</div></aside><main class="workspace"><div id="examBar" class="examBar"><div><b id="examTitle"></b><div class="examTaskHint" id="examHint"></div></div><button class="examBtn" onclick="showExamDocuments()">Документы задания</button></div>
@@ -233,36 +238,33 @@ function selectRow(tr,ckgVal,fioVal,channelVal,dobVal,sexVal){
 }
 function openSelected(){
   const tr=document.querySelector('.incoming tbody tr.sel');
-  if(!tr || !selected){alert('Сначала выберите пациента в списке поступающих');return;}
-
-  // Сохраняем данные выбранного пациента ДО сброса карточки.
+  if(!tr){alert('Сначала выберите пациента в списке поступающих');return;}
+  const td=tr.querySelectorAll('td');
   const patient={
-    ckg:selected.ckg||'',
-    fio:selected.fio||'',
-    channel:selected.channel||'',
-    dob:selected.dob||tr.dataset.dob||'',
-    sex:selected.sex||tr.dataset.sex||''
+    sex:(tr.dataset.sex||'').trim(),
+    channel:(td[1]?.textContent||'').trim(),
+    ckg:(td[2]?.textContent||'').trim(),
+    fio:(td[4]?.textContent||'').trim(),
+    dob:(tr.dataset.dob||'').trim()
   };
-
-  walkinPanel.classList.add('hidden');
-  incomingPanel.classList.add('hidden');
-  card.classList.remove('hidden');
+  selected={...patient};
+  document.getElementById('walkinPanel').classList.add('hidden');
+  document.getElementById('incomingPanel').classList.add('hidden');
+  document.getElementById('card').classList.remove('hidden');
   resetCard();
   selected={...patient};
-  setActiveMenu('incoming');
-  setTopTitle('Поступающие');
-
-  // ФИО и дата рождения всегда берутся из выбранной строки «Поступающих».
-  fillFio(patient.fio);
+  setActiveMenu('incoming'); setTopTitle('Поступающие');
+  const p=patient.fio.split(/\\s+/);
+  document.getElementById('surname').value=p[0]||'';
+  document.getElementById('name').value=p[1]||'';
+  document.getElementById('patronymic').value=p.slice(2).join(' ')||'';
   document.getElementById('dob').value=patient.dob;
   document.getElementById('ckg').value=patient.ckg;
   document.getElementById('channel').value=patient.channel;
   applyChannelFields(patient.channel);
-
   document.getElementById('sex').value=patient.sex;
   document.querySelectorAll('input[name="sexRadio"]').forEach(r=>r.checked=(r.value===patient.sex));
   document.getElementById('extra').value='';
-
   document.querySelectorAll('.pane').forEach(x=>x.classList.remove('on'));
   document.getElementById('main').classList.add('on');
   document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('on'));
@@ -310,7 +312,7 @@ function searchERZL(){
   }
   updateRegister();
 }
-function updateRegister(){let ok=document.getElementById('erzRightStatus')&&document.getElementById('erzRightStatus').textContent!=='';if(ok){regBtn.disabled=false;regBtn.classList.add('enabled')}else{regBtn.disabled=true;regBtn.classList.remove('enabled')}}
+function updateRegister(){const b=document.getElementById('regBtn');const st=document.getElementById('erzRightStatus');const ok=!!(st&&st.textContent.trim());b.disabled=!ok;b.classList.toggle('enabled',ok)}
 function registerPatient(){if(regBtn.disabled)return;registered=true;if(selected&&selected.walkin){walkinEmpty.innerHTML='<div style="text-align:center"><b>Пациент зарегистрирован как самотёк</b><br>'+[surname.value,name.value,patronymic.value].join(' ').replace(/\s+/g,' ').trim()+'</div>'}alert('Пациент зарегистрирован. Доступны вкладки карты пациента.');document.querySelectorAll('.tabs button')[1].click()}
 function openPDO(){pdoModal.classList.add('show');pdoQ.value='';renderPDO();pdoQ.focus()}
 function renderPDO(){let q=pdoQ.value.toLowerCase();pdoList.innerHTML=specs.filter(s=>s.toLowerCase().includes(q)).map(s=>`<div class="pdoItem" onclick="choosePDO(this)">${s}</div>`).join('')}
