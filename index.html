@@ -1817,4 +1817,75 @@ document.addEventListener("click",function(e){
 }
 </style>
 
+
+<style id="personal-fields-alignment-v2">
+/* Паспортный редактор: строгая сетка, все подписи и поля по общим линиям */
+#personal #pdPassEditor{
+  margin:6px 28px 10px 165px!important;
+  padding:10px 12px!important;
+}
+#personal #pdPassEditor .pdEditGrid{
+  display:grid!important;
+  grid-template-columns:120px 245px 95px minmax(180px,1fr) 70px 190px!important;
+  grid-template-rows:30px 30px!important;
+  column-gap:10px!important;
+  row-gap:8px!important;
+  align-items:center!important;
+}
+#personal #pdPassEditor .pdEditGrid > label{
+  margin:0!important;
+  padding:0!important;
+  text-align:right!important;
+  white-space:nowrap!important;
+  line-height:28px!important;
+}
+#personal #pdPassEditor .pdEditGrid > input,
+#personal #pdPassEditor .pdEditGrid > select{
+  width:100%!important;
+  min-width:0!important;
+  height:28px!important;
+  margin:0!important;
+  padding:3px 7px!important;
+  box-sizing:border-box!important;
+}
+
+/* 1-я строка */
+#personal #pdPassEditor .pdEditGrid > label:nth-of-type(1){grid-column:1!important;grid-row:1!important}
+#personal #pdPassEditor .pdEditGrid > select{grid-column:2!important;grid-row:1!important}
+#personal #pdPassEditor .pdEditGrid > label:nth-of-type(2){grid-column:3!important;grid-row:1!important}
+#personal #pdSeries{grid-column:4!important;grid-row:1!important}
+#personal #pdPassEditor .pdEditGrid > label:nth-of-type(3){grid-column:5!important;grid-row:1!important}
+#personal #pdNumber{grid-column:6!important;grid-row:1!important;width:100%!important}
+
+/* 2-я строка */
+#personal #pdPassEditor .pdEditGrid > label:nth-of-type(4){grid-column:1!important;grid-row:2!important}
+#personal #pdIssueDate{grid-column:2!important;grid-row:2!important}
+#personal #pdPassEditor .pdEditGrid > label:nth-of-type(5){grid-column:3!important;grid-row:2!important}
+#personal #pdIssued{grid-column:4 / 7!important;grid-row:2!important;width:100%!important}
+
+/* Дискетка — справа, компактная и неброская */
+#personal #pdPassEditor .pdEditorSave{
+  display:flex!important;
+  justify-content:flex-end!important;
+  margin:6px 0 0!important;
+  padding:0!important;
+}
+#personal #pdPassEditor .pdDisk{
+  width:24px!important;
+  min-width:24px!important;
+  height:23px!important;
+  background:#e5f0e1!important;
+  border:1px solid #a9c3a1!important;
+  color:#56864f!important;
+  opacity:.75!important;
+  font-size:12px!important;
+}
+
+/* Нижние строки персональных данных: единая линия подписей/полей */
+#personal .pdFormRow,
+#personal .pdRow{
+  align-items:center!important;
+}
+</style>
+
 </body></html>
