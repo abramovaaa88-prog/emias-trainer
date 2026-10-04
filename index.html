@@ -1543,4 +1543,188 @@ document.addEventListener("click",function(e){
 })();
 </script>
 
+
+<style>
+/* ===== Personal data / passport editor — strict visual correction ===== */
+#personal .pdEditor{
+  margin:8px 28px 12px 155px!important;
+  padding:10px 12px 12px!important;
+  border:1px solid #e0e4e5!important;
+  background:#fff!important;
+  position:relative!important;
+}
+
+/* Force passport fields into two clean rows */
+#personal .pdEditor .editGrid{
+  display:grid!important;
+  grid-template-columns:
+    122px minmax(170px,1.05fr)
+    70px minmax(190px,1.2fr)
+    70px minmax(175px,1fr)!important;
+  column-gap:9px!important;
+  row-gap:8px!important;
+  align-items:center!important;
+  width:100%!important;
+}
+
+#personal .pdEditor .editGrid > *{
+  min-width:0!important;
+  box-sizing:border-box!important;
+}
+
+#personal .pdEditor input,
+#personal .pdEditor select{
+  width:100%!important;
+  min-width:0!important;
+  height:27px!important;
+  padding:2px 7px!important;
+  border:1px solid #cfd7d9!important;
+  background:#fff!important;
+  font:14px Arial,sans-serif!important;
+}
+
+#personal .pdEditor label{
+  white-space:nowrap!important;
+  text-align:right!important;
+  padding-right:2px!important;
+}
+
+/* Keep long passport number fully visible */
+#personal .pdEditor input[id*="number" i],
+#personal .pdEditor input[name*="number" i],
+#personal .pdEditor input[id*="num" i],
+#personal .pdEditor input[name*="num" i]{
+  min-width:175px!important;
+}
+
+/* Issued-by field may span the remaining width */
+#personal .pdEditor textarea{
+  width:100%!important;
+  min-height:38px!important;
+  resize:none!important;
+  border:1px solid #cfd7d9!important;
+  box-sizing:border-box!important;
+}
+
+/* Save disk: intentionally subtle. No bright square. */
+#personal .saveDisk,
+#personal button[title*="сохран" i],
+#personal button[aria-label*="сохран" i]{
+  width:25px!important;
+  height:24px!important;
+  min-width:25px!important;
+  padding:1px!important;
+  margin:4px 6px 2px auto!important;
+  border:1px solid #b9ccb4!important;
+  border-radius:1px!important;
+  background:#edf5ea!important;
+  color:#4e8847!important;
+  box-shadow:none!important;
+  font-size:14px!important;
+  line-height:20px!important;
+  opacity:.72!important;
+  display:block!important;
+  cursor:pointer!important;
+}
+#personal .saveDisk:hover,
+#personal button[title*="сохран" i]:hover,
+#personal button[aria-label*="сохран" i]:hover{
+  background:#e4f0df!important;
+  border-color:#9fbd98!important;
+  opacity:.95!important;
+}
+#personal .saveDisk:active,
+#personal button[title*="сохран" i]:active,
+#personal button[aria-label*="сохран" i]:active{
+  transform:translateY(1px)!important;
+}
+
+/* Make an emoji disk itself green-ish and less visually dominant */
+#personal .saveDisk{
+  filter:saturate(.55)!important;
+}
+
+/* Avoid the training banner covering lower controls */
+.trainingBanner, #trainingBanner, .trainerBanner{
+  pointer-events:none!important;
+  opacity:.82!important;
+}
+</style>
+<script>
+/* Explicit-save training rule:
+   edits are provisional until the small disk is clicked. */
+(function(){
+  const state = new WeakMap();
+
+  const fields = box => [...box.querySelectorAll('input,select,textarea')];
+
+  function take(box){
+    return fields(box).map(el=>({
+      el:el,
+      value:el.value,
+      checked:typeof el.checked==='boolean' ? el.checked : undefined
+    }));
+  }
+  function apply(data){
+    (data||[]).forEach(x=>{
+      x.el.value=x.value;
+      if(x.checked!==undefined) x.el.checked=x.checked;
+      x.el.dispatchEvent(new Event('input',{bubbles:true}));
+      x.el.dispatchEvent(new Event('change',{bubbles:true}));
+    });
+  }
+  function saveButton(btn){
+    const s=((btn.title||'')+' '+(btn.getAttribute('aria-label')||'')+' '+(btn.textContent||'')).toLowerCase();
+    return btn.classList.contains('saveDisk') || s.includes('сохран') || s.includes('💾');
+  }
+  function pencilButton(btn){
+    const s=((btn.title||'')+' '+(btn.getAttribute('aria-label')||'')+' '+(btn.textContent||'')).toLowerCase();
+    return s.includes('карандаш') || s.includes('✎') || s.includes('✏') || s.trim()==='a';
+  }
+  function visibleEditor(){
+    return [...document.querySelectorAll('#personal .pdEditor')]
+      .find(x=>getComputedStyle(x).display!=='none');
+  }
+
+  document.addEventListener('click',function(e){
+    const btn=e.target.closest('button');
+    if(!btn)return;
+
+    if(pencilButton(btn)){
+      setTimeout(()=>{
+        const ed=visibleEditor();
+        if(ed && !state.has(ed)){
+          state.set(ed,{committed:take(ed), saved:false});
+        }
+      },0);
+      return;
+    }
+
+    if(saveButton(btn)){
+      const ed=btn.closest('.pdEditor') || visibleEditor();
+      if(!ed)return;
+      state.set(ed,{committed:take(ed), saved:true});
+      btn.style.opacity='.45';
+      setTimeout(()=>btn.style.opacity='.72',160);
+    }
+  },true);
+
+  /* If editor is closed/hidden without a disk click, discard changes. */
+  const mo=new MutationObserver(()=>{
+    document.querySelectorAll('#personal .pdEditor').forEach(ed=>{
+      const st=state.get(ed);
+      if(!st)return;
+      const hidden=getComputedStyle(ed).display==='none' || ed.hidden;
+      if(hidden){
+        if(!st.saved) apply(st.committed);
+        state.delete(ed);
+      }
+    });
+  });
+  mo.observe(document.documentElement,{
+    subtree:true,attributes:true,attributeFilter:['style','class','hidden']
+  });
+})();
+</script>
+
 </body></html>
