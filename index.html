@@ -324,7 +324,38 @@ function updateDocsState(){let b=document.getElementById('addDocBtn'),st=documen
 function addTrainingScan(){if(!erz)return;docEmpty.style.display='none';let tr=document.createElement('tr');tr.className='docRow';let now=new Date();let ds=now.toLocaleDateString('ru-RU')+' '+now.toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});tr.innerHTML='<td>📄 📁 ✖</td><td>Согласие. Медицинские документы</td><td>Учебный скан документа</td><td>'+ds+'</td>';tr.onclick=()=>preview.innerHTML='<div style="text-align:center"><b>Учебный скан</b><br><br>Предварительный просмотр документа<br><small>Персональные данные вымышлены</small></div>';docsBody.appendChild(tr);preview.innerHTML='<div style="text-align:center"><b>Учебный скан добавлен</b><br><br>Выберите строку документа для просмотра</div>'}
 pdoModal.addEventListener('click',e=>{if(e.target===pdoModal)pdoModal.classList.remove('show')});icdModal.addEventListener('click',e=>{if(e.target===icdModal)icdModal.classList.remove('show')});
 function saved(btn){let old=btn.textContent;btn.textContent='Сохранено ✓';setTimeout(()=>btn.textContent=old,1200)}
-function resetCard(){erz=false;erzMismatch=false;registered=false;erzStatus.innerHTML='';attachment.value='';reason.value='';pdo.value='';regBtn.disabled=true;regBtn.classList.remove('enabled');unlockIdentity();['surname','name','patronymic','dob','snils','policy','sex'].forEach(id=>{let e=document.getElementById(id);e.value=''});['pErzl','aErzl','dErzl'].forEach(id=>{let e=document.getElementById(id);if(e)e.textContent='○'});if(document.getElementById('docsBody'))docsBody.innerHTML='';if(document.getElementById('docEmpty'))docEmpty.style.display='flex';if(document.getElementById('preview'))preview.textContent='Область предварительного просмотра';updateDocsState()}
+function unlockIdentity(){
+  ['surname','name','patronymic','dob'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.disabled=false;
+  });
+}
+function lockIdentity(){
+  ['surname','name','patronymic','dob'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.disabled=true;
+  });
+}
+
+function resetCard(){
+  erz=false;erzMismatch=false;registered=false;
+  const es=document.getElementById('erzStatus'); if(es) es.innerHTML='';
+  const ers=document.getElementById('erzRightStatus'); if(ers){ers.textContent='';ers.className='erzRightStatus';}
+  const at=document.getElementById('attachment'); if(at) at.value='';
+  const rs=document.getElementById('reason'); if(rs) rs.value='';
+  const pd=document.getElementById('pdo'); if(pd) pd.value='';
+  const rb=document.getElementById('regBtn'); if(rb){rb.disabled=true;rb.classList.remove('enabled');}
+  unlockIdentity();
+  ['surname','name','patronymic','dob','snils','policy','sex'].forEach(id=>{
+    const e=document.getElementById(id); if(e)e.value='';
+  });
+  document.querySelectorAll('input[name="sexRadio"]').forEach(r=>r.checked=false);
+  ['pErzl','aErzl','dErzl'].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent='○'});
+  const db=document.getElementById('docsBody'); if(db)db.innerHTML='';
+  const de=document.getElementById('docEmpty'); if(de)de.style.display='flex';
+  const pv=document.getElementById('preview'); if(pv)pv.textContent='Область предварительного просмотра';
+  updateDocsState();
+}
 
 /* ====================== ЭКЗАМЕН: 30 УЧЕБНЫХ СЦЕНАРИЕВ ====================== */
 const examScenarios = [
